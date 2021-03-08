@@ -10,10 +10,10 @@ import java.util.ArrayList;
 public class Order {
     static int orders_id=0;
     int id;
-    User user;
-    Driver driver;
-    Local local;
-    ArrayList<Product> products;
+    private User user;
+    private Driver driver;
+    private Local local;
+    private ArrayList<Product> products;
 
     public Order(User user, ArrayList<Product> products, Local local) {
         orders_id+=1;

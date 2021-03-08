@@ -24,6 +24,8 @@ public class UserServices {
     }
     public static void createOrder(ArrayList<Local> locals){
         // alege product ID - ul
+        // apoi trimite intr-un fel la toti driverii din range 500 fata de local
+        // de la care a comandat
     }
 
     public static void deleteAccount(ArrayList<User> users,String username){

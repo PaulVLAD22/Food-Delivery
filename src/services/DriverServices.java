@@ -19,13 +19,14 @@ public class DriverServices {
     }
 
     public static void deleteAccount(ArrayList<Driver> drivers, String username){
+        Driver toDeleteDriver=null;
         for (Driver driver : drivers){
             if (driver.getUsername().equals(username)){
                 System.out.println("Enter password:");
                 Scanner scanner = new Scanner(System.in);
                 String password = scanner.next();
                 if (password.equals(driver.getPassword())){
-                    drivers.remove(driver);
+                    toDeleteDriver=driver;
                 }
                 else{
                     System.out.println("Wrong Password");
@@ -33,5 +34,6 @@ public class DriverServices {
                 }
             }
         }
+        drivers.remove(toDeleteDriver);
     }
 }
