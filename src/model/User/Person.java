@@ -1,6 +1,7 @@
 package model.User;
 
 import model.Coordinates;
+import model.Local.Product;
 
 public abstract class Person {
     protected static int persons_id=0;
@@ -17,6 +18,18 @@ public abstract class Person {
         this.email=email;
         this.coordinates = coordinate;
         this.password = password;
+    }
+    @Override
+    public boolean equals(Object o){
+        if ( o == this){
+            return true;
+        }
+        if (!(o instanceof Person)){
+            return false;
+        }
+
+        Person p = (Person) o;
+        return (this.username.equals(p.username) && this.email.equals(p.email));
     }
 
     @Override

@@ -8,10 +8,10 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class LocalServices {
-    public static void addMenuProduct(Local local, Product product){
+    public void addMenuProduct(Local local, Product product){
         local.getMenu().getProducts().add(product);
     }
-    public static void removeMenuProduct(Local local, Product product){
+    public void removeMenuProduct(Local local, Product product){
         local.getMenu().getProducts().remove(product);
     }
     public static void removeLocal(Set<Local> locals, String name){

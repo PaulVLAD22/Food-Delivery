@@ -9,6 +9,10 @@ public class Driver extends Person {
     public Driver(String username, String email, Coordinates coordinate, String password) {
         super(username, email, coordinate, password);
     }
+    @Override
+    public String toString(){
+        return super.toString()+"Current order: ";
+    }
 
     public Order getCurrentOrder() {
         return currentOrder;
