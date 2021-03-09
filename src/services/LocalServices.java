@@ -15,7 +15,7 @@ public class LocalServices {
     public static void removeMenuProduct(Local local, Product product){
         local.getMenu().getProducts().remove(product);
     }
-    public static void removeLocal(ArrayList<Local> locals,String name){
+    public static void deleteAccount(ArrayList<Local> locals,String name){
         Local toDeleteLocal=null;
         for (Local local : locals){
             if (local.getName().equals(name)){
