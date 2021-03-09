@@ -2,7 +2,7 @@ package model.User;
 
 import model.Coordinates;
 
-public class Person {
+public abstract class Person {
     protected static int persons_id=0;
     protected int id;
     protected String username;
