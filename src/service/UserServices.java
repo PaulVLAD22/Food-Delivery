@@ -1,14 +1,15 @@
-package services;
+package service;
 
-import models.Local.Local;
-import models.Local.Product;
-import models.User.User;
+import model.Local.Local;
+import model.Local.Product;
+import model.User.User;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class UserServices {
-    public static void displayMenu(ArrayList<Local> locals){
+    public static void displayMenu(Set<Local> locals){
         for (Local local:locals){
             System.out.println("Local "+local.getName());
             for (Product product : local.getMenu().getProducts()){
@@ -19,7 +20,6 @@ public class UserServices {
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.next();
         if (choice.equals("Yes") || choice.equals("yes")){
-
         }
     }
     public static void createOrder(ArrayList<Local> locals){

@@ -1,22 +1,27 @@
-package models.User;
+package model.User;
 
-import models.Coordinates;
+import model.Coordinates;
 
-public class User {
-    private static int users_id=0;
-    private int id;
-    private String username;
-    private String email;
-    private Coordinates coordinates;
-    private String password;
+public class Person {
+    protected static int persons_id=0;
+    protected int id;
+    protected String username;
+    protected String email;
+    protected Coordinates coordinates;
+    protected String password;
 
-    public User(String username, String email, Coordinates coordinate, String password) {
-        users_id+=1;
-        this.id=users_id;
+    public Person(String username, String email, Coordinates coordinate, String password) {
+        persons_id+=1;
+        this.id=persons_id;
         this.username = username;
         this.email=email;
         this.coordinates = coordinate;
         this.password = password;
+    }
+
+    @Override
+    public String toString(){
+        return "Username: "+username+" Email:"+email+" Coordinates: "+coordinates;
     }
 
     public String getUsername() {
@@ -44,11 +49,11 @@ public class User {
     }
 
     public static int getUsers_id() {
-        return users_id;
+        return persons_id;
     }
 
     public static void setUsers_id(int users_id) {
-        User.users_id = users_id;
+        Person.persons_id = users_id;
     }
 
     public int getId() {

@@ -1,12 +1,11 @@
-package services;
+package service;
 
 import config.Config;
-import models.Local.Local;
-import models.Local.Product;
-import models.User.Driver;
+import model.Local.Local;
+import model.Local.Product;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class LocalServices {
     public static void addMenuProduct(Local local, Product product){
@@ -15,7 +14,7 @@ public class LocalServices {
     public static void removeMenuProduct(Local local, Product product){
         local.getMenu().getProducts().remove(product);
     }
-    public static void removeLocal(ArrayList<Local> locals,String name){
+    public static void removeLocal(Set<Local> locals, String name){
         Local toDeleteLocal=null;
         for (Local local : locals){
             if (local.getName().equals(name)){

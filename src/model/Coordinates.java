@@ -1,4 +1,4 @@
-package models;
+package model;
 
 public class Coordinates {
 
@@ -8,6 +8,10 @@ public class Coordinates {
     public Coordinates(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+    @Override
+    public String toString(){
+        return x+"-"+y;
     }
 
     public int getX() {

@@ -1,4 +1,4 @@
-package models.Local;
+package model.Local;
 
 public class Product {
     private static int products_id=0;
@@ -11,6 +11,17 @@ public class Product {
         this.id = products_id;
         this.name = name;
         this.price = price;
+    }
+    @Override
+    public boolean equals(Object o){
+        if ( o == this){
+            return true;
+        }
+        if (!(o instanceof Product)){
+            return false;
+        }
+        Product p = (Product) o;
+        return (this.id == p.id && this.name==p.name && this.price==p.price);
     }
 
     @Override

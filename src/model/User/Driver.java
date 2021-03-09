@@ -1,9 +1,9 @@
-package models.User;
+package model.User;
 
-import models.Coordinates;
-import models.Order.Order;
+import model.Coordinates;
+import model.Order.Order;
 
-public class Driver extends User {
+public class Driver extends Person {
     private Order currentOrder;
 
     public Driver(String username, String email, Coordinates coordinate, String password) {

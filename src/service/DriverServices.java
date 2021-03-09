@@ -1,7 +1,7 @@
-package services;
+package service;
 
-import models.Order.Order;
-import models.User.Driver;
+import model.Order.Order;
+import model.User.Driver;
 
 import java.util.ArrayList;
 import java.util.Scanner;

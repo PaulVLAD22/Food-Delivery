@@ -1,15 +1,15 @@
-package models.Order;
+package model.Order;
 
-import models.User.Driver;
-import models.Local.Local;
-import models.Local.Product;
-import models.User.User;
+import model.User.Driver;
+import model.Local.Local;
+import model.Local.Product;
+import model.User.User;
 
 import java.util.ArrayList;
 
 public class Order {
-    static int orders_id=0;
-    int id;
+    private static int orders_id=0;
+    private int id;
     private User user;
     private Driver driver;
     private Local local;

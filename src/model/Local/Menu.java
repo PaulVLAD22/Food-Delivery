@@ -1,4 +1,4 @@
-package models.Local;
+package model.Local;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package models.Local;
+package model.Local;
 
-import models.Coordinates;
+import model.Coordinates;
 
 public class Local {
     private static int locals_id;
