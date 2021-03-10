@@ -1,9 +1,8 @@
-package model.User;
+package model.user;
 
 import model.Coordinates;
-import model.Local.Product;
 
-public abstract class Person {
+public abstract class Account {
     protected static int persons_id=0;
     protected int id;
     protected String username;
@@ -11,7 +10,7 @@ public abstract class Person {
     protected Coordinates coordinates;
     protected String password;
 
-    public Person(String username, String email, Coordinates coordinate, String password) {
+    public Account(String username, String email, Coordinates coordinate, String password) {
         persons_id+=1;
         this.id=persons_id;
         this.username = username;
@@ -24,11 +23,11 @@ public abstract class Person {
         if ( o == this){
             return true;
         }
-        if (!(o instanceof Person)){
+        if (!(o instanceof Account)){
             return false;
         }
 
-        Person p = (Person) o;
+        Account p = (Account) o;
         return (this.username.equals(p.username) && this.email.equals(p.email));
     }
 
@@ -66,7 +65,7 @@ public abstract class Person {
     }
 
     public static void setUsers_id(int users_id) {
-        Person.persons_id = users_id;
+        Account.persons_id = users_id;
     }
 
     public int getId() {

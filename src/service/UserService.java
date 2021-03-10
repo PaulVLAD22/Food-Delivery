@@ -1,14 +1,13 @@
 package service;
 
-import model.Local.Local;
-import model.Local.Product;
-import model.User.User;
+import model.local.Local;
+import model.local.Product;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
-public class UserServices {
+public class UserService {
     public void displayMenu(Set<Local> locals){
         for (Local local:locals){
             System.out.println("Local "+local.getName());

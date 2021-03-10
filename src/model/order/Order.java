@@ -1,9 +1,9 @@
-package model.Order;
+package model.order;
 
-import model.User.Driver;
-import model.Local.Local;
-import model.Local.Product;
-import model.User.User;
+import model.user.Driver;
+import model.local.Local;
+import model.local.Product;
+import model.user.User;
 
 import java.util.ArrayList;
 

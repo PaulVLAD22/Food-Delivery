@@ -1,4 +1,4 @@
-package model.Local;
+package model.local;
 
 public class Product {
     private static int products_id=0;

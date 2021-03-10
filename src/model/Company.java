@@ -1,28 +1,27 @@
 package model;
 
-import model.Local.Local;
-import model.Order.Order;
-import model.User.Driver;
-import model.User.Person;
-import model.User.User;
+import model.local.Local;
+import model.order.Order;
+import model.user.Driver;
+import model.user.Account;
+import model.user.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Company {
     private Set<Local> locals = new HashSet<>();
-    private ArrayList <Person> people= new ArrayList<>();
+    private ArrayList <Account> people= new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Driver> drivers = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
 
-    public ArrayList<Person> getPeople() {
+    public ArrayList<Account> getPeople() {
         return people;
     }
 
-    public void setPeople(ArrayList<Person> people) {
+    public void setPeople(ArrayList<Account> people) {
         this.people = people;
     }
 

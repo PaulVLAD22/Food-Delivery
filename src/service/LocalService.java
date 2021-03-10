@@ -1,13 +1,13 @@
 package service;
 
 import config.Config;
-import model.Local.Local;
-import model.Local.Product;
+import model.local.Local;
+import model.local.Product;
 
 import java.util.Scanner;
 import java.util.Set;
 
-public class LocalServices {
+public class LocalService {
     public void addMenuProduct(Local local, Product product){
         local.getMenu().getProducts().add(product);
     }

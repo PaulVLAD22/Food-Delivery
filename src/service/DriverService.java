@@ -1,12 +1,11 @@
 package service;
 
-import model.Order.Order;
-import model.User.Driver;
+import model.order.Order;
+import model.user.Driver;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DriverServices {
+public class DriverService {
 
     public static void sendOrder(Driver driver, Order order){
         System.out.println(driver.getUsername()+"! Accept order? (Yes/No)");
