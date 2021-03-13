@@ -1,21 +1,23 @@
-package services;
+package service;
 
 import config.Config;
-import models.Local.Local;
-import models.Local.Product;
-import models.User.Driver;
+import model.local.Local;
+import model.local.Local;
+import model.local.Product;
+import model.user.Driver;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
-public class LocalServices {
+public class LocalService {
     public static void addMenuProduct(Local local, Product product){
         local.getMenu().getProducts().add(product);
     }
     public static void removeMenuProduct(Local local, Product product){
         local.getMenu().getProducts().remove(product);
     }
-    public static void deleteAccount(ArrayList<Local> locals,String name){
+    public static void deleteAccount(Set<Local> locals, String name){
         Local toDeleteLocal=null;
         for (Local local : locals){
             if (local.getName().equals(name)){

@@ -27,7 +27,8 @@ public class Main {
         company.getLocals().add(new Local("Local 1",new Menu(products1),
                 new Coordinates(100,200)));
 
-        companyService.displayMenu(company);
+        companyService.displayMenu(company,new User("vlad","vlad@mail.com",
+                new Coordinates(25,25),"parola"));
         System.out.println(company.getUsers().size());
     }
 }

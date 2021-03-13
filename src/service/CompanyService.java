@@ -1,6 +1,7 @@
 package service;
 
 import model.Company;
+import model.Coordinates;
 import model.local.Local;
 import model.user.Driver;
 import model.user.Account;
@@ -13,8 +14,9 @@ public class CompanyService {
     DriverService driverService = new DriverService();
     LocalService localService = new LocalService();
 
-    public void displayMenu(Company c){
-        userService.displayMenu(c.getLocals());
+    public void displayMenu(Company c, User user){
+        userService.displayMenu(c.getLocals(),user);
+
     }
 
     public void addAccount(Company company, Account account){
@@ -43,5 +45,10 @@ public class CompanyService {
             }
         }
         company.getPeople().remove(toDeleteAccount);
+    }
+
+    public double calculateDistance(Coordinates c1, Coordinates c2){
+        return Math.sqrt(Math.pow(c2.getX()-c1.getX(),2)+
+                Math.pow(c2.getY()-c1.getY(),2));
     }
 }

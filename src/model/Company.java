@@ -17,6 +17,21 @@ public class Company {
     private ArrayList<Driver> drivers = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
 
+    public Company(){
+        locals=null;
+        people=null;
+        users=null;
+        drivers=null;
+        orders=null;
+    }
+    public Company(Set<Local> locals, ArrayList<Account> people, ArrayList<User> users, ArrayList<Driver> drivers, ArrayList<Order> orders) {
+        this.locals = locals;
+        this.people = people;
+        this.users = users;
+        this.drivers = drivers;
+        this.orders = orders;
+    }
+
     public ArrayList<Account> getPeople() {
         return people;
     }
