@@ -2,11 +2,8 @@ package service;
 
 import config.Config;
 import model.local.Local;
-import model.local.Local;
 import model.local.Product;
-import model.user.Driver;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 

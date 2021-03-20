@@ -1,6 +1,9 @@
 package model.local;
 
+import lombok.Builder;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Menu {
     private static int menus_id=0;
@@ -11,6 +14,19 @@ public class Menu {
         menus_id+=1;
         this.id=menus_id;
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Menu menu = (Menu) o;
+        return products.equals(menu.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(products);
     }
 
     public static int getMenus_id() {

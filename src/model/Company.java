@@ -1,10 +1,11 @@
 package model;
 
+import model.account.Admin;
 import model.local.Local;
 import model.order.Order;
-import model.user.Driver;
-import model.user.Account;
-import model.user.User;
+import model.account.Driver;
+import model.account.Account;
+import model.account.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,32 +13,22 @@ import java.util.Set;
 
 public class Company {
     private Set<Local> locals = new HashSet<>();
-    private ArrayList <Account> people= new ArrayList<>();
+    private ArrayList <Account> costumers = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
     private ArrayList<Driver> drivers = new ArrayList<>();
+    private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
 
     public Company(){
-        locals=null;
-        people=null;
-        users=null;
-        drivers=null;
-        orders=null;
     }
-    public Company(Set<Local> locals, ArrayList<Account> people, ArrayList<User> users, ArrayList<Driver> drivers, ArrayList<Order> orders) {
+
+    public Company(Set<Local> locals, ArrayList<Account> costumers, ArrayList<User> users, ArrayList<Driver> drivers, ArrayList<Admin> admins, ArrayList<Order> orders) {
         this.locals = locals;
-        this.people = people;
+        this.costumers = costumers;
         this.users = users;
         this.drivers = drivers;
+        this.admins = admins;
         this.orders = orders;
-    }
-
-    public ArrayList<Account> getPeople() {
-        return people;
-    }
-
-    public void setPeople(ArrayList<Account> people) {
-        this.people = people;
     }
 
     public Set<Local> getLocals() {
@@ -46,6 +37,22 @@ public class Company {
 
     public void setLocals(Set<Local> locals) {
         this.locals = locals;
+    }
+
+    public ArrayList<Account> getCostumers() {
+        return costumers;
+    }
+
+    public void setCostumers(ArrayList<Account> costumers) {
+        this.costumers = costumers;
+        for (Account account : costumers){
+            if (account instanceof User){
+                this.getUsers().add((User)account);
+            }
+            else{
+                this.getDrivers().add((Driver)account);
+            }
+        }
     }
 
     public ArrayList<User> getUsers() {
@@ -62,6 +69,14 @@ public class Company {
 
     public void setDrivers(ArrayList<Driver> drivers) {
         this.drivers = drivers;
+    }
+
+    public ArrayList<Admin> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(ArrayList<Admin> admins) {
+        this.admins = admins;
     }
 
     public ArrayList<Order> getOrders() {

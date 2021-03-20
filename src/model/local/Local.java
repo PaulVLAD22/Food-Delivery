@@ -1,22 +1,49 @@
 package model.local;
 
-import model.Coordinates;
+import model.Coordinate;
+
+import java.util.Objects;
 
 public class Local {
     private static int locals_id;
     private int id;
     private String name;
     private Menu menu;
-    private Coordinates coordinates;
+    private Coordinate coordinate;
 
-    public Local(String name, Menu menu,Coordinates coordinates) {
+    public Local(){
+
+    }
+
+    public Local(String name, Menu menu, Coordinate coordinate) {
         locals_id+=1;
         this.id=locals_id;
         this.name = name;
         this.menu = menu;
-        this.coordinates=coordinates;
+        this.coordinate = coordinate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Local local = (Local) o;
+        return Objects.equals(name, local.name) &&
+                Objects.equals(menu, local.menu);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, menu);
+    }
+
+    @Override
+    public String toString() {
+        return "Local{" +
+                "name='" + name + '\'' +
+                ", coordinate=" + coordinate +
+                '}';
+    }
 
     public static int getLocals_id() {
         return locals_id;
@@ -50,11 +77,11 @@ public class Local {
         this.menu = menu;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+    public Coordinate getCoordinates() {
+        return coordinate;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public void setCoordinates(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 }

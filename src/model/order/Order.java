@@ -1,11 +1,13 @@
 package model.order;
 
-import model.user.Driver;
+import model.account.Driver;
+import model.account.User;
 import model.local.Local;
 import model.local.Product;
-import model.user.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
     private static int orders_id=0;
@@ -13,14 +15,41 @@ public class Order {
     private User user;
     private Driver driver;
     private Local local;
-    private ArrayList<Product> products;
+    private Map<Product,Integer> products_quantity;
 
-    public Order(User user, ArrayList<Product> products, Local local) {
+    public Order(User user, Driver driver, Local local, Map<Product, Integer> products_quantity) {
         orders_id+=1;
-        this.id=orders_id;
+        this.id = orders_id;
         this.user = user;
-        this.products=products;
-        this.local=local;
+        this.driver = driver;
+        this.local = local;
+        this.products_quantity = products_quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", driver=" + driver +
+                ", local=" + local +
+                ", products_quantity=" + products_quantity +
+                '}';
+    }
+    public double calculateOrder(){
+        double sum=0;
+        for (Map.Entry<Product,Integer> entry : products_quantity.entrySet() ){
+            sum+= entry.getKey().getPrice()*entry.getValue();
+        }
+        return sum;
+    }
+
+    public Map<Product, Integer> getProducts_quantity() {
+        return products_quantity;
+    }
+
+    public void setProducts_quantity(Map<Product, Integer> products_quantity) {
+        this.products_quantity = products_quantity;
     }
 
     public static int getOrders_id() {
@@ -47,13 +76,7 @@ public class Order {
         this.driver = driver;
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
-    }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
 
     public int getId() {
         return id;
