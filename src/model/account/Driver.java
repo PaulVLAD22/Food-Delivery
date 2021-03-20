@@ -28,7 +28,6 @@ public class Driver extends Account {
         return currentOrder;
     }
 
-
     public void setCurrentOrder(Order currentOrder) {
         this.currentOrder = currentOrder;
     }

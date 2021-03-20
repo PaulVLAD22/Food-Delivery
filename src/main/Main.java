@@ -10,20 +10,15 @@ import model.local.Local;
 import model.local.Menu;
 import model.local.Product;
 import service.BasicService;
-import service.CompanyService;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
-import static java.lang.Integer.parseInt;
 
 public class Main {
     public static void main(String[] args) {
 
         BasicService basicService = new BasicService();
-        CompanyService companyService = new CompanyService();
         Company company = new Company();
-        Scanner scanner = new Scanner(System.in);
 
         Account a= new User("u","",new Coordinate(20,20),"p");
         Account b = new Driver("a","",new Coordinate(25,25),"p");
