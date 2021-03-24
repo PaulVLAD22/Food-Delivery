@@ -3,13 +3,13 @@
 
 <li><b>ArrayList</b> for keeping hold of Users, Drivers, Admins, Products</li>
 <li><b>Set</b> for keeping hold of Locals</li>
-<li><u>Map</u> for keeping hold of an order's Product<->Qunatity</li>
+<li><b>Map</b> for keeping hold of an order's Product<->Qunatity</li>
 
 <h3>Models Folder:</h3>
 accont:
-Account-> User
-       -> Driver
-       -> Admin
+Account-><ul> User
+       -><ul> Driver
+       -><ul> Admin
 
 local:
 Local, Menu, Product
