@@ -9,6 +9,6 @@ public class User extends Account {
     }
     @Override
     public String toString(){
-        return super.toString();
+        return "User id: "+this.getId()+super.toString();
     }
 }

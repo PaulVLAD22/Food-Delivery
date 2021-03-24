@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Company {
+    private static Company instance = null;
+
     private Set<Local> locals = new HashSet<>();
     private ArrayList <Account> costumers = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
@@ -19,16 +21,14 @@ public class Company {
     private ArrayList<Admin> admins = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
 
+    //singleton
     public Company(){
     }
-
-    public Company(Set<Local> locals, ArrayList<Account> costumers, ArrayList<User> users, ArrayList<Driver> drivers, ArrayList<Admin> admins, ArrayList<Order> orders) {
-        this.locals = locals;
-        this.costumers = costumers;
-        this.users = users;
-        this.drivers = drivers;
-        this.admins = admins;
-        this.orders = orders;
+    public static Company getInstance() {
+        if (instance==null){
+            instance=new Company();
+        }
+        return instance;
     }
 
     public Set<Local> getLocals() {

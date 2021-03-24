@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 
-
+// I plan to use this for encrypting passwords (not sure if it's ok)
 public class CryptUtil {
     private static final String ALGORITHM = "Blowfish";
     private static final String MODE = "Blowfish/CBC/PKCS5Padding";

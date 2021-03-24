@@ -1,10 +1,12 @@
 package model.local;
 
-import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
+@Getter
+@Setter
 public class Menu {
     private static int menus_id=0;
     private int id;
@@ -29,27 +31,11 @@ public class Menu {
         return Objects.hash(products);
     }
 
-    public static int getMenus_id() {
-        return menus_id;
-    }
-
-    public static void setMenus_id(int menus_id) {
-        Menu.menus_id = menus_id;
-    }
-
-    public ArrayList<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", products=" + products +
+                '}';
     }
 }

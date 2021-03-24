@@ -1,8 +1,11 @@
 package model.account;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.Coordinate;
 import model.order.Order;
-
+@Getter
+@Setter
 public class Driver extends Account {
     private Order currentOrder;
     private double salary;
@@ -13,22 +16,6 @@ public class Driver extends Account {
     }
     @Override
     public String toString(){
-        return super.toString()+"Current order: ";
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public Order getCurrentOrder() {
-        return currentOrder;
-    }
-
-    public void setCurrentOrder(Order currentOrder) {
-        this.currentOrder = currentOrder;
+        return "Driver id:"+this.getId()+super.toString()+"Current order: ";
     }
 }

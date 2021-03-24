@@ -4,9 +4,6 @@ import model.account.Driver;
 import model.account.User;
 import model.local.Local;
 import model.local.Product;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
@@ -75,8 +72,6 @@ public class Order {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
-
-
 
     public int getId() {
         return id;

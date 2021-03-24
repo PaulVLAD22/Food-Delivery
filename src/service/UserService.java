@@ -70,8 +70,8 @@ public class UserService extends BasicService {
                     Order order = new Order(user, closestDriver, chosenLocal, order_products);
                     company.getOrders().add(order);
                     closestDriver.setCurrentOrder(order);
-                    double totalDistance = calculateDistance(chosenLocal.getCoordinates(),closestDriver.getCoordinate())+
-                            calculateDistance(chosenLocal.getCoordinates(), user.getCoordinate());
+                    double totalDistance = calculateDistance(chosenLocal.getCoordinate(),closestDriver.getCoordinate())+
+                            calculateDistance(chosenLocal.getCoordinate(), user.getCoordinate());
                     //unitati de masura pe 10;
                     System.out.println("The order will arrive in :"+totalDistance/10);
                     System.out.println("The driver will travel with speed of a 10 units per minute");
@@ -101,10 +101,10 @@ public class UserService extends BasicService {
 
     private Driver closestDriver(Local chosenLocal, Company company) {
         ArrayList<Driver> drivers = company.getDrivers();
-        double minimum_distance = calculateDistance(drivers.get(0).getCoordinate(), chosenLocal.getCoordinates());
+        double minimum_distance = calculateDistance(drivers.get(0).getCoordinate(), chosenLocal.getCoordinate());
         int driver_index = 0;
         for (Driver driver : drivers) {
-            double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getCoordinates());
+            double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getCoordinate());
             if (currentDistance < minimum_distance) {
                 minimum_distance = currentDistance;
                 driver_index=drivers.indexOf(driver);

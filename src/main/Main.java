@@ -16,29 +16,33 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-
         BasicService basicService = new BasicService();
-        Company company = new Company();
+        //singleton
+        Company company = Company.getInstance();
 
         Account a= new User("u","",new Coordinate(20,20),"p");
         Account b = new Driver("a","",new Coordinate(25,25),"p");
         Account c = new Driver("c","ema",new Coordinate(30,30),"p");
+
         ArrayList<Account> costumers = new ArrayList<>();
         ArrayList<Product> products = new ArrayList<>();
         ArrayList<Admin> admins = new ArrayList<>();
+
         admins.add(new Admin("us","em","pa"));
         company.setAdmins(admins);
+
         products.add(new Product("product1",50));
         Menu menu = new Menu(products);
+
         Set<Local> locals = new HashSet<>();
         locals.add(new Local("name",menu,new Coordinate(25,25)));
         company.setLocals(locals);
 
         costumers.add(a);
         costumers.add(b);
+        costumers.add(c);
         company.setCostumers(costumers);
 
-        System.out.println(a.getClass());
         basicService.displayMainMenu(company);
 
 

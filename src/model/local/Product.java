@@ -1,9 +1,11 @@
 package model.local;
 
-import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Objects;
-
+@Getter
+@Setter
 public class Product {
     private static int products_id=0;
     private int id;
@@ -34,37 +36,5 @@ public class Product {
     @Override
     public String toString(){
         return ("Product ID: " + this.id + " - " +this.name+" - "+this.price+"$");
-    }
-
-    public static int getProducts_id() {
-        return products_id;
-    }
-
-    public static void setProducts_id(int products_id) {
-        Product.products_id = products_id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 }

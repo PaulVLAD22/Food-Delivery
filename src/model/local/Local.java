@@ -1,11 +1,15 @@
 package model.local;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.Coordinate;
 
 import java.util.Objects;
 
+@Getter
+@Setter
 public class Local {
-    private static int locals_id;
+    private static int locals_id=0;
     private int id;
     private String name;
     private Menu menu;
@@ -42,46 +46,7 @@ public class Local {
         return "Local{" +
                 "name='" + name + '\'' +
                 ", coordinate=" + coordinate +
-                '}';
+                '}'+menu;
     }
 
-    public static int getLocals_id() {
-        return locals_id;
-    }
-
-    public static void setLocals_id(int locals_id) {
-        Local.locals_id = locals_id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
-    public Coordinate getCoordinates() {
-        return coordinate;
-    }
-
-    public void setCoordinates(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
 }
