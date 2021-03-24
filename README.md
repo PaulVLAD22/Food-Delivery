@@ -7,7 +7,7 @@
 
 <h3>Models Folder:</h3>
 accont:
-Account: Admin, User, Driver
+Account-> Admin, User, Driver
 <br>
 local:
 Local, Menu, Product
