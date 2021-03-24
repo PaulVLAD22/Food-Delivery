@@ -20,6 +20,4 @@ Company
 Coordinate (x,y)
 
 <h3>Services:</h3>
-Basic Service (available to anyone who just ran the app) -> UserService (Users)
-                                                         -> DriverService (Drivers)
-                                                         -> Admin Service (Admins)
+Basic Service (available to anyone who just ran the app) -> UserService (Users), DriverService (Drivers), Admin Service (Admins)
