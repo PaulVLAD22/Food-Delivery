@@ -1,8 +1,9 @@
 # Food-Delivery-Java--Uni
 <h4>Collections Used:</h4>
-ArrayList for keeping hold of Users, Drivers, Admins, Products
-Set for keeping hold of Locals
-Map for keeping hold of an order's Product<->Qunatity
+
+<li>ArrayList for keeping hold of Users, Drivers, Admins, Products</li>
+<li>Set for keeping hold of Locals</li>
+<li>Map for keeping hold of an order's Product<->Qunatity</li>
 
 <h3>Models Folder:</h3>
 accont:
