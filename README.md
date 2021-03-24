@@ -1,4 +1,12 @@
 # Food-Delivery-Java--Uni
+Services Available:
+<ul>
+  <li>Login as User -> View Menu, Order, Log Out, Delete Account </li>
+  <li>Login as Driver -> Complete Order, View Expected Salary, Log Out, Delete Account</li>
+  <li>Login as Admin -> View list of drivers/ users/ locals/ orders, Change local details, Add Local, Log Out</li>
+  <li>Sign up as User</li>
+  <li>Sign up as Driver</li>
+</ul>
 <h4>Collections Used:</h4>
 
 <li><b>ArrayList</b> for keeping hold of Users, Drivers, Admins, Products</li>
