@@ -1,4 +1,9 @@
 # Food-Delivery-Java--Uni
+
+Libraries used:
+<ul>
+  <li>Lombok for @Getter and @Setter (also tried to use @Builder but had some buggs)</li>
+</ul>
 Services Available:
 <ul>
   <li>Login as User -> View Menu, Order, Log Out, Delete Account </li>
