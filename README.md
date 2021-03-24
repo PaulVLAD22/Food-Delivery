@@ -16,7 +16,7 @@ Services Available:
 
 <li><b>ArrayList</b> for keeping hold of Users, Drivers, Admins, Products</li>
 <li><b>Set</b> for keeping hold of Locals</li>
-<li><b>Map</b> for keeping hold of an order's Product<->Qunatity</li>
+<li><b>Map</b> for keeping hold of an order's Product<->Quantity</li>
 
 <h3>Models Folder:</h3>
 accont:
