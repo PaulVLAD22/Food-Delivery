@@ -32,6 +32,7 @@ public class Main {
         company.setAdmins(admins);
 
         products.add(new Product("product1",50));
+        products.add(new Product("aroduct1",50));
         Menu menu = new Menu(products);
 
         Set<Local> locals = new HashSet<>();
