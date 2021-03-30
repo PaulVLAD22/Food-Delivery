@@ -44,10 +44,10 @@ public class Local {
 
     @Override
     public String toString() {
-        return "Local{" +
-                "name='" + name + '\'' +
+        return "Local{" + " id = "+id+
+                " name='" + name + '\'' +
                 ", coordinate=" + location +
-                '}'+menu;
+                '}'+"\n"+menu+"\n";
     }
 
 }

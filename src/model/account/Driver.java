@@ -7,7 +7,7 @@ import model.order.Order;
 @Getter
 @Setter
 public class Driver extends Account {
-    private Order currentOrder;
+    private Order currentOrder=null;
     private double salary;
 
     public Driver(String username, String email, Coordinate coordinate, String password) {
@@ -16,6 +16,6 @@ public class Driver extends Account {
     }
     @Override
     public String toString(){
-        return "Driver id:"+this.getId()+super.toString()+"Current order: ";
+        return "Driver id: "+this.getId()+" "+super.toString()+"Current order: "+ (currentOrder!=null ? currentOrder.toString() : "none");
     }
 }

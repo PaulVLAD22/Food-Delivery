@@ -126,7 +126,8 @@ public class AdminService extends BasicService {
                     System.out.println("City:");
                     String city= scanner.next();
                     System.out.println("Street name:");
-                    String street = scanner.next();
+                    scanner.next();
+                    String street = scanner.nextLine();
                     System.out.println("Enter X coordinate:");
                     int coordinateX = scanner.nextInt();
                     System.out.println("Enter Y coordinate:");
