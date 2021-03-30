@@ -30,7 +30,8 @@ Order
 <br>
 Company
 <br>
-Coordinate (x,y)
+Location:
+Location, Address, Cooridnate (x,y)
 
 <h3>Services:</h3>
 Basic Service (available to anyone who just ran the app) -> UserService (Users), DriverService (Drivers), Admin Service (Admins)
