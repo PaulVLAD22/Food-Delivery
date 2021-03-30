@@ -2,7 +2,8 @@ package model.local;
 
 import lombok.Getter;
 import lombok.Setter;
-import model.Coordinate;
+import model.location.Coordinate;
+import model.location.Location;
 
 import java.util.Objects;
 
@@ -13,18 +14,18 @@ public class Local {
     private int id;
     private String name;
     private Menu menu;
-    private Coordinate coordinate;
+    private Location location;
 
     public Local(){
 
     }
 
-    public Local(String name, Menu menu, Coordinate coordinate) {
+    public Local(String name, Menu menu, Location location) {
         locals_id+=1;
         this.id=locals_id;
         this.name = name;
         this.menu = menu;
-        this.coordinate = coordinate;
+        this.location = location;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class Local {
     public String toString() {
         return "Local{" +
                 "name='" + name + '\'' +
-                ", coordinate=" + coordinate +
+                ", coordinate=" + location +
                 '}'+menu;
     }
 

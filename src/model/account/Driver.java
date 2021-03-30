@@ -2,7 +2,7 @@ package model.account;
 
 import lombok.Getter;
 import lombok.Setter;
-import model.Coordinate;
+import model.location.Coordinate;
 import model.order.Order;
 @Getter
 @Setter

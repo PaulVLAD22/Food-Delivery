@@ -1,14 +1,9 @@
 package service;
 
 import model.Company;
-import model.account.User;
-import model.local.Local;
-import model.local.Product;
-import model.order.Order;
 import model.account.Driver;
 
 import java.util.Scanner;
-import java.util.Set;
 
 public class DriverService extends BasicService {
 
@@ -19,7 +14,8 @@ public class DriverService extends BasicService {
             System.out.println("2.View expected salary");
             System.out.println("3.Log Out");
             System.out.println("4.Delete Account");
-            choice = scanner.nextInt();
+            choice = readIntChoice();
+
             switch (choice) {
                 case 1:
                     driver.setSalary(driver.getSalary()+driver.getCurrentOrder().calculateOrder()/10);
@@ -47,13 +43,4 @@ public class DriverService extends BasicService {
 
     }
 
-//    public static void sendOrder(Driver driver, Order order){
-//        System.out.println(driver.getUsername()+"! Accept order? (Yes/No)");
-//        Scanner scanner = new Scanner(System.in);
-//        String choice = scanner.next();
-//        if (choice.equals("Yes") || choice.equals("yes")){
-//            order.setDriver(driver);
-//        }
-//        driver.setCurrentOrder(order);
-//    }
 }

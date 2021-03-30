@@ -1,7 +1,8 @@
 package main;
 
 import model.Company;
-import model.Coordinate;
+import model.location.Address;
+import model.location.Coordinate;
 import model.account.Account;
 import model.account.Admin;
 import model.account.Driver;
@@ -9,6 +10,7 @@ import model.account.User;
 import model.local.Local;
 import model.local.Menu;
 import model.local.Product;
+import model.location.Location;
 import service.BasicService;
 
 import java.util.*;
@@ -36,7 +38,8 @@ public class Main {
         Menu menu = new Menu(products);
 
         Set<Local> locals = new HashSet<>();
-        locals.add(new Local("name",menu,new Coordinate(25,25)));
+        Location location1 = new Location(new Address(),new Coordinate(25,25));
+        locals.add(new Local("name",menu,location1));
         company.setLocals(locals);
 
         costumers.add(a);

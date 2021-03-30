@@ -1,7 +1,8 @@
 package service;
 
+import exception.NoDriverInRangeException;
 import model.Company;
-import model.Coordinate;
+import model.location.Coordinate;
 import model.account.Driver;
 import model.account.User;
 import model.local.Local;
@@ -44,49 +45,57 @@ public class UserService extends BasicService {
                     ArrayList<Local> locals_arr = new ArrayList<>(locals);
                     System.out.println("Choose the local:");
                     for (Local local : locals_arr) {
-                        System.out.println(locals_arr.indexOf(local));
+                        System.out.println(locals_arr.indexOf(local)+1);
                         System.out.println(local);
                     }
-                    choice = scanner.nextInt();
+                    choice = readIntChoice();
+                    choice-=1;
+
                     Local chosenLocal = locals_arr.get(choice);
                     ArrayList<Product> localProducts = chosenLocal.getMenu().getProducts();
                     for (Product product : localProducts) {
-                        System.out.println(localProducts.indexOf(product));
+                        System.out.println(localProducts.indexOf(product)+1);
                         System.out.println(product);
                     }
                     HashMap<Product, Integer> order_products = new HashMap<Product, Integer>();
-                    System.out.println("Enter number of products you want to buy \n (1:2) means 2 pieces of product number 1");
-                    String input = "0:1";
+                    System.out.println("Enter number of products you want to buy \n 1:2 means 2 pieces of product number 1");
+                    String input = scanner.next();
                     String[] entry = input.split(",");
                     for (String s : entry) {
-                        System.out.println(s);
+                        //System.out.println(s);
                         String[] info = s.split(":");
                         int productNumber = parseInt(info[0]);
                         int productQuantity = parseInt(info[1]);
                         order_products.put(localProducts.get(productNumber), productQuantity);
                     }
-
-                    Driver closestDriver = closestDriver(chosenLocal, company);
-                    Order order = new Order(user, closestDriver, chosenLocal, order_products);
-                    company.getOrders().add(order);
-                    closestDriver.setCurrentOrder(order);
-                    double totalDistance = calculateDistance(chosenLocal.getCoordinate(),closestDriver.getCoordinate())+
-                            calculateDistance(chosenLocal.getCoordinate(), user.getCoordinate());
-                    //unitati de masura pe 10;
-                    System.out.println("The order will arrive in :"+totalDistance/10);
-                    System.out.println("The driver will travel with speed of a 10 units per minute");
+                    try {
+                        Driver closestDriver = closestDriver(chosenLocal, company);
+                        Order order = new Order(user, closestDriver, chosenLocal, order_products);
+                        company.getOrders().add(order);
+                        closestDriver.setCurrentOrder(order);
+                        double totalDistance = calculateDistance(chosenLocal.getLocation().getCoordinate(), closestDriver.getCoordinate()) +
+                                calculateDistance(chosenLocal.getLocation().getCoordinate(), user.getCoordinate());
+                        //unitati de masura pe 10;
+                        System.out.println("The order will arrive in :" + totalDistance / 10);
+                        System.out.println("The driver will travel with speed of a 10 units per minute");
+                    }
+                    catch (NoDriverInRangeException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 3:
                     displayMainMenu(company);
                     break;
                 case 4:
-                    System.out.println("Are you sure? (1-yes/0-no)");
-                    choice = scanner.nextInt();
-                    if (choice == 1) {
+                    System.out.println("Are you sure? (1-yes)");
+                    choice = readIntChoice();
+                    if (choice==1) {
                         company.getUsers().remove(user);
-                    } else {
-                        displayMenu(user, company);
                     }
+                    else{
+                        System.out.println("Didn't delete account");
+                    }
+
                 default:
                     System.out.println("Choose a valid option");
             }
@@ -99,16 +108,19 @@ public class UserService extends BasicService {
                 Math.pow(c2.getY() - c1.getY(), 2));
     }
 
-    private Driver closestDriver(Local chosenLocal, Company company) {
+    private Driver closestDriver(Local chosenLocal, Company company) throws NoDriverInRangeException {
         ArrayList<Driver> drivers = company.getDrivers();
-        double minimum_distance = calculateDistance(drivers.get(0).getCoordinate(), chosenLocal.getCoordinate());
-        int driver_index = 0;
+        double minimum_distance = Double.POSITIVE_INFINITY;
+        int driver_index = -1;
         for (Driver driver : drivers) {
-            double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getCoordinate());
-            if (currentDistance < minimum_distance) {
+            double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getLocation().getCoordinate());
+            if (currentDistance < 1000 && currentDistance < minimum_distance) {
                 minimum_distance = currentDistance;
                 driver_index=drivers.indexOf(driver);
             }
+        }
+        if (driver_index==-1){
+            throw new NoDriverInRangeException();
         }
         return drivers.get(driver_index);
     }

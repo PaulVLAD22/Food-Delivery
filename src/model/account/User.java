@@ -1,6 +1,6 @@
 package model.account;
 
-import model.Coordinate;
+import model.location.Coordinate;
 
 public class User extends Account {
 

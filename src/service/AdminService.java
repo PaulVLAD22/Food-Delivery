@@ -1,15 +1,16 @@
 package service;
 
 import model.Company;
-import model.Coordinate;
+import model.local.Menu;
+import model.location.Address;
+import model.location.Coordinate;
 import model.account.Admin;
 import model.account.Driver;
 import model.account.User;
 import model.local.Local;
 import model.local.Product;
+import model.location.Location;
 import model.order.Order;
-
-import java.util.Scanner;
 
 public class AdminService extends BasicService {
 
@@ -20,6 +21,7 @@ public class AdminService extends BasicService {
     private void changeLocalDetails(Admin admin, Company company) {
         System.out.println("Local id:");
         int localId = scanner.nextInt();
+        System.out.println("For security reasons:");
         System.out.println("Local name:");
         String localName = scanner.next();
         Local chosenLocal = null;
@@ -36,7 +38,7 @@ public class AdminService extends BasicService {
                 System.out.println("4.Delete Local");
                 System.out.println("5.Display Menu");
                 System.out.println("10. Cancel");
-                choice = scanner.nextInt();
+                choice = readIntChoice();
                 String productName;
                 switch (choice) {
                     case 1:
@@ -79,7 +81,7 @@ public class AdminService extends BasicService {
             displayMenu(admin,company);
         }
 
-}
+    }
 
     public void displayMenu(Admin admin, Company company) {
         while (true) {
@@ -90,7 +92,7 @@ public class AdminService extends BasicService {
             System.out.println("5.Change Local details.");
             System.out.println("6.Add Local");
             System.out.println("10.Log Out");
-            choice = scanner.nextInt();
+            choice = readIntChoice();
             switch (choice) {
                 case 1:
                     for (Driver driver : company.getDrivers()) {
@@ -118,11 +120,18 @@ public class AdminService extends BasicService {
                 case 6:
                     System.out.println("Enter New Local Name:");
                     String localName = scanner.next ();
+                    System.out.println("Location information:");
+                    System.out.println("Country:");
+                    String country = scanner.next();
+                    System.out.println("City:");
+                    String city= scanner.next();
+                    System.out.println("Street name:");
+                    String street = scanner.next();
                     System.out.println("Enter X coordinate:");
                     int coordinateX = scanner.nextInt();
                     System.out.println("Enter Y coordinate:");
                     int coordinateY = scanner.nextInt();
-                    company.getLocals().add(new Local(localName,null,new Coordinate(coordinateX,coordinateY)));
+                    company.getLocals().add(new Local(localName,new Menu(),new Location(new Address(country,city,street),new Coordinate(coordinateX,coordinateY))));
                     break;
                 case 10:
                     displayMainMenu(company);

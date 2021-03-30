@@ -12,6 +12,9 @@ public class Menu {
     private int id;
     private ArrayList<Product> products;
 
+    public Menu() {
+    }
+
     public Menu(ArrayList<Product> products) {
         menus_id+=1;
         this.id=menus_id;

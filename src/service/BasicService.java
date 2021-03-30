@@ -1,13 +1,15 @@
 package service;
 
+import exception.UsernameOrEmailAlreadyTaken;
 import model.Company;
-import model.Coordinate;
+import model.location.Coordinate;
 import model.account.Account;
 import model.account.Admin;
 import model.account.Driver;
 import model.account.User;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BasicService {
@@ -21,7 +23,7 @@ public class BasicService {
             System.out.println("3. Sign up as User");
             System.out.println("4. Sign up as Driver");
             System.out.println("10. Exit");
-            choice=scanner.nextInt();
+            choice = readIntChoice();
 
             switch (choice) {
                 case 1:
@@ -56,10 +58,18 @@ public class BasicService {
                     }
                     break;
                 case 3:
-                    signUpUser(company);
+                    try {
+                        signUpUser(company);
+                    }catch (UsernameOrEmailAlreadyTaken e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 4:
-                    signUpDriver(company);
+                    try {
+                        signUpDriver(company);
+                    }catch (UsernameOrEmailAlreadyTaken e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 10:
                     System.exit(0);
@@ -70,36 +80,49 @@ public class BasicService {
 
     }
 
-    // ar ajuta un inline function ca sa nu citesc datele contului
-    // si in user si in driver
-
-    private void signUpUser(Company company) {
+    private void signUpUser(Company company) throws UsernameOrEmailAlreadyTaken {
         System.out.println("Username:");
         String username = scanner.next();
         System.out.println("Email:");
         String email = scanner.next();
+
+        for (User user : company.getUsers()){
+
+            if (user.getEmail().equals(email) || user.getUsername().equals(username)){
+                throw new UsernameOrEmailAlreadyTaken();
+            }
+        }
+
         System.out.println("Password");
         String password = scanner.next();
         System.out.println("Coordinate X:");
-        int coordinateX = scanner.nextInt();
+        int coordinateX = readIntChoice();
         System.out.println("Coordinate Y:");
-        int coordinateY = scanner.nextInt();
+        int coordinateY = readIntChoice();
         User user = new User(username,email,new Coordinate(coordinateX,coordinateY),password);
         company.getCostumers().add(user);
         company.getUsers().add(user);
     }
 
-    private void signUpDriver(Company company ) {
+    private void signUpDriver(Company company ) throws UsernameOrEmailAlreadyTaken {
+
         System.out.println("Username:");
         String username = scanner.next();
         System.out.println("Email:");
         String email = scanner.next();
+
+        for (Driver driver : company.getDrivers()){
+            if (driver.getEmail().equals(email) || driver.getUsername().equals(username)){
+                throw new UsernameOrEmailAlreadyTaken();
+            }
+        }
+
         System.out.println("Password");
         String password = scanner.next();
         System.out.println("Coordinate X:");
-        int coordinateX = scanner.nextInt();
+        int coordinateX = readIntChoice();
         System.out.println("Coordinate Y:");
-        int coordinateY = scanner.nextInt();
+        int coordinateY = readIntChoice();
         Driver driver = new Driver(username,email,new Coordinate(coordinateX,coordinateY),password);
         company.getCostumers().add(driver);
         company.getDrivers().add(driver);
@@ -120,6 +143,25 @@ public class BasicService {
             }
         }
         return null;
+    }
+    protected int readIntChoice(){
+        int choice;
+        while (true) {
+            try {
+                choice = scanner.nextInt();
+                return choice;
+            } catch (InputMismatchException e) {
+                System.out.println("Wrong input. Try again");
+                scanner.next();
+                break;
+            }
+            catch(Exception e){
+                System.out.println("Unexpected error");
+                scanner.next();
+                break;
+            }
+        }
+        return 0;
     }
 
 
