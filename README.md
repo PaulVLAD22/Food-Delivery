@@ -8,7 +8,7 @@ Services Available:
 <ul>
   <li>Login as User -> View Menu, Order, Log Out, Delete Account </li>
   <li>Login as Driver -> Complete Order, View Expected Salary, Log Out, Delete Account</li>
-  <li>Login as Admin -> View list of drivers/ users/ locals/ orders, Change local details (remove product, add product, change local name, display menu, cancel), Add Local, Log Out</li>
+  <li>Login as Admin -> View list of drivers/ users/ locals/ orders, Change local details (delete local, remove product, add product, change local name, display menu, cancel), Add Local, Log Out</li>
   <li>Sign up as User</li>
   <li>Sign up as Driver</li>
 </ul>
