@@ -2,7 +2,7 @@
 
 Libraries used:
 <ul>
-  <li>Lombok for @Getter and @Setter (also tried to use @Builder but had I encountered bugs)</li>
+  <li>Lombok for @Getter and @Setter (also tried to use @Builder but encountered bugs)</li>
 </ul>
 Services Available:
 <ul>
