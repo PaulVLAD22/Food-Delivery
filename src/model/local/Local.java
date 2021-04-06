@@ -2,7 +2,6 @@ package model.local;
 
 import lombok.Getter;
 import lombok.Setter;
-import model.location.Coordinate;
 import model.location.Location;
 
 import java.util.Objects;
@@ -10,7 +9,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Local {
-    private static int locals_id=0;
+    private static int localID =0;
     private int id;
     private String name;
     private Menu menu;
@@ -21,8 +20,8 @@ public class Local {
     }
 
     public Local(String name, Menu menu, Location location) {
-        locals_id+=1;
-        this.id=locals_id;
+        localID +=1;
+        this.id= localID;
         this.name = name;
         this.menu = menu;
         this.location = location;

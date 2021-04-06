@@ -9,17 +9,18 @@ import model.account.User;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Company {
     private static Company instance = null;
 
     private Set<Local> locals = new HashSet<>();
-    private ArrayList <Account> costumers = new ArrayList<>();
-    private ArrayList<User> users = new ArrayList<>();
-    private ArrayList<Driver> drivers = new ArrayList<>();
-    private ArrayList<Admin> admins = new ArrayList<>();
-    private ArrayList<Order> orders = new ArrayList<>();
+    private List <Account> costumers = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
+    private List<Driver> drivers = new ArrayList<>();
+    private List<Admin> admins = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     //singleton
     public Company(){
@@ -39,7 +40,7 @@ public class Company {
         this.locals = locals;
     }
 
-    public ArrayList<Account> getCostumers() {
+    public List<Account> getCostumers() {
         return costumers;
     }
 
@@ -55,7 +56,7 @@ public class Company {
         }
     }
 
-    public ArrayList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -63,7 +64,7 @@ public class Company {
         this.users = users;
     }
 
-    public ArrayList<Driver> getDrivers() {
+    public List<Driver> getDrivers() {
         return drivers;
     }
 
@@ -71,7 +72,7 @@ public class Company {
         this.drivers = drivers;
     }
 
-    public ArrayList<Admin> getAdmins() {
+    public List<Admin> getAdmins() {
         return admins;
     }
 
@@ -79,7 +80,7 @@ public class Company {
         this.admins = admins;
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 

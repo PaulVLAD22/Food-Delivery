@@ -4,20 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Getter
 @Setter
 public class Menu {
-    private static int menus_id=0;
+    private static int menuID =0;
     private int id;
-    private ArrayList<Product> products;
+    private List<Product> products;
 
     public Menu() {
     }
 
-    public Menu(ArrayList<Product> products) {
-        menus_id+=1;
-        this.id=menus_id;
+    public Menu(List<Product> products) {
+        menuID +=1;
+        this.id= menuID;
         this.products = products;
     }
 

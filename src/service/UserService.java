@@ -9,14 +9,15 @@ import model.local.Local;
 import model.local.Product;
 import model.order.Order;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.Integer.*;
 
-public class UserService extends BasicService {
+public class UserService {
+    private BasicService basicService = new BasicService();
+    private int choice;
+    private Scanner scanner = new Scanner(System.in);
+
     public void displayMenu(User user, Company company) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -48,16 +49,16 @@ public class UserService extends BasicService {
                         System.out.println(locals_arr.indexOf(local)+1);
                         System.out.println(local);
                     }
-                    choice = readIntChoice();
+                    choice = basicService.readIntChoice();
                     choice-=1;
 
                     Local chosenLocal = locals_arr.get(choice);
-                    ArrayList<Product> localProducts = chosenLocal.getMenu().getProducts();
+                    List<Product> localProducts = chosenLocal.getMenu().getProducts();
                     for (Product product : localProducts) {
                         System.out.println(localProducts.indexOf(product)+1);
                         System.out.println(product);
                     }
-                    HashMap<Product, Integer> order_products = new HashMap<Product, Integer>();
+                    Map<Product, Integer> order_products = new HashMap<Product, Integer>();
                     System.out.println("Enter number of products you want to buy \n 1:2 means 2 pieces of product number 1");
                     String input = scanner.next();
                     String[] entry = input.split(",");
@@ -84,11 +85,11 @@ public class UserService extends BasicService {
                     }
                     break;
                 case 3:
-                    displayMainMenu(company);
+                    basicService.displayMainMenu(company);
                     break;
                 case 4:
                     System.out.println("Are you sure? (1-yes)");
-                    choice = readIntChoice();
+                    choice = basicService.readIntChoice();
                     if (choice==1) {
                         company.getUsers().remove(user);
                     }
@@ -109,7 +110,7 @@ public class UserService extends BasicService {
     }
 
     private Driver closestDriver(Local chosenLocal, Company company) throws NoDriverInRangeException {
-        ArrayList<Driver> drivers = company.getDrivers();
+        List<Driver> drivers = company.getDrivers();
         double minimum_distance = Double.POSITIVE_INFINITY;
         int driver_index = -1;
         for (Driver driver : drivers) {

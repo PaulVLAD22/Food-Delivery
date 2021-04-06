@@ -7,14 +7,14 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Product {
-    private static int products_id=0;
+    private static int productID =0;
     private int id;
     private String name;
     private double price;
 
     public Product(String name, double price) {
-        products_id+=1;
-        this.id = products_id;
+        productID +=1;
+        this.id = productID;
         this.name = name;
         this.price = price;
     }

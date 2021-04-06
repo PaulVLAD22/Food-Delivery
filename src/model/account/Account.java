@@ -8,7 +8,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public abstract class Account {
-    protected static int account_id=0;
+    protected static int accountID =0;
     protected int id;
     protected String username;
     protected String email;

@@ -8,13 +8,13 @@ import model.account.Admin;
 import model.account.Driver;
 import model.account.User;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class BasicService {
-    protected Scanner scanner = new Scanner(System.in);
-    protected int choice;
+    private Scanner scanner = new Scanner(System.in);
+    private int choice;
 
     public void displayMainMenu(Company company){
         while (true) {
@@ -128,7 +128,7 @@ public class BasicService {
         company.getDrivers().add(driver);
     }
 
-    private Account login(String username,String password, ArrayList<Account> accounts){
+    private Account login(String username,String password, List<Account> accounts){
         for (Account account : accounts){
             if (account.getUsername().equals(username) && account.getPassword().equals(password)){
                 return account;
@@ -136,7 +136,7 @@ public class BasicService {
         }
         return null;
     }
-    private Admin loginAdmin(String username,String password, ArrayList<Admin> admins){
+    private Admin loginAdmin(String username,String password, List<Admin> admins){
         for (Admin admin : admins){
             if (admin.getUsername().equals(username) && admin.getPassword().equals(password)){
                 return admin;

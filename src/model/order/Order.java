@@ -12,7 +12,7 @@ public class Order {
     private User user;
     private Driver driver;
     private Local local;
-    private Map<Product,Integer> products_quantity;
+    private Map<Product,Integer> productsQuantity;
 
     public Order(User user, Driver driver, Local local, Map<Product, Integer> products_quantity) {
         orders_id+=1;
@@ -20,7 +20,7 @@ public class Order {
         this.user = user;
         this.driver = driver;
         this.local = local;
-        this.products_quantity = products_quantity;
+        this.productsQuantity = products_quantity;
     }
 
     @Override
@@ -30,23 +30,16 @@ public class Order {
                 ", user=" + user +
                 ", driver=" + driver +
                 ", local=" + local +
-                ", products_quantity=" + products_quantity +
+                ", products_quantity=" + productsQuantity +
                 '}';
     }
-    public double calculateOrder(){
-        double sum=0;
-        for (Map.Entry<Product,Integer> entry : products_quantity.entrySet() ){
-            sum+= entry.getKey().getPrice()*entry.getValue();
-        }
-        return sum;
+
+    public Map<Product, Integer> getProductsQuantity() {
+        return productsQuantity;
     }
 
-    public Map<Product, Integer> getProducts_quantity() {
-        return products_quantity;
-    }
-
-    public void setProducts_quantity(Map<Product, Integer> products_quantity) {
-        this.products_quantity = products_quantity;
+    public void setProductsQuantity(Map<Product, Integer> productsQuantity) {
+        this.productsQuantity = productsQuantity;
     }
 
     public static int getOrders_id() {

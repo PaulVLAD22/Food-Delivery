@@ -12,7 +12,12 @@ import model.local.Product;
 import model.location.Location;
 import model.order.Order;
 
-public class AdminService extends BasicService {
+import java.util.Scanner;
+
+public class AdminService {
+    private BasicService basicService = new BasicService();
+    private int choice;
+    private Scanner scanner = new Scanner(System.in);
 
     private void changeLocalName(Local local) {
         local.setName(scanner.next());
@@ -38,7 +43,7 @@ public class AdminService extends BasicService {
                 System.out.println("4.Delete Local");
                 System.out.println("5.Display Menu");
                 System.out.println("10. Cancel");
-                choice = readIntChoice();
+                choice = basicService.readIntChoice();
                 String productName;
                 switch (choice) {
                     case 1:
@@ -92,7 +97,7 @@ public class AdminService extends BasicService {
             System.out.println("5.Change Local details.");
             System.out.println("6.Add Local");
             System.out.println("10.Log Out");
-            choice = readIntChoice();
+            choice = basicService.readIntChoice();
             switch (choice) {
                 case 1:
                     for (Driver driver : company.getDrivers()) {
@@ -135,7 +140,7 @@ public class AdminService extends BasicService {
                     company.getLocals().add(new Local(localName,new Menu(),new Location(new Address(country,city,street),new Coordinate(coordinateX,coordinateY))));
                     break;
                 case 10:
-                    displayMainMenu(company);
+                    basicService.displayMainMenu(company);
                     break;
                 default:
                     System.out.println("Choose a valid option");

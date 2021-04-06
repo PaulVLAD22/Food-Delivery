@@ -7,7 +7,7 @@ import model.order.Order;
 @Getter
 @Setter
 public class Driver extends Account {
-    private Order currentOrder=null;
+    private Order currentOrder;
     private double salary;
 
     public Driver(String username, String email, Coordinate coordinate, String password) {

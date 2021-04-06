@@ -5,7 +5,10 @@ import model.account.Driver;
 
 import java.util.Scanner;
 
-public class DriverService extends BasicService {
+public class DriverService{
+    private OrderService orderService = new OrderService();
+    private BasicService basicService = new BasicService();
+    private int choice;
 
     public void displayMenu(Driver driver, Company company){
         Scanner scanner = new Scanner(System.in);
@@ -14,18 +17,18 @@ public class DriverService extends BasicService {
             System.out.println("2.View expected salary");
             System.out.println("3.Log Out");
             System.out.println("4.Delete Account");
-            choice = readIntChoice();
+            choice = basicService.readIntChoice();
 
             switch (choice) {
                 case 1:
-                    driver.setSalary(driver.getSalary()+driver.getCurrentOrder().calculateOrder()/10);
+                    driver.setSalary(driver.getSalary()+orderService.calculateOrder(driver.getCurrentOrder())/10);
                     driver.setCurrentOrder(null);
                     break;
                 case 2:
                     System.out.println("Your Expected salary is "+ driver.getSalary());
                     break;
                 case 3:
-                    displayMainMenu(company);
+                    basicService.displayMainMenu(company);
                     break;
                 case 4:
                     System.out.println("Are you sure? (1-yes/0-no)");
@@ -42,5 +45,6 @@ public class DriverService extends BasicService {
         }
 
     }
+
 
 }
