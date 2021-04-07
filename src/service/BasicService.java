@@ -153,7 +153,7 @@ public class BasicService {
             } catch (InputMismatchException e) {
                 System.out.println("Wrong input. Try again");
                 scanner.next();
-                break;
+
             }
             catch(Exception e){
                 System.out.println("Unexpected error");

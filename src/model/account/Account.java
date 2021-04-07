@@ -16,7 +16,7 @@ public abstract class Account {
     protected Coordinate coordinate;
 
     public Account(String username, String email,Coordinate coordinate, String password) {
-
+        accountID+=1;
         this.username = username;
         this.email=email;
         this.password = password;

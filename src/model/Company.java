@@ -1,5 +1,7 @@
 package model;
 
+import lombok.Getter;
+import lombok.Setter;
 import model.account.Admin;
 import model.local.Local;
 import model.order.Order;
@@ -12,6 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
 public class Company {
     private static Company instance = null;
 
@@ -23,25 +27,13 @@ public class Company {
     private List<Order> orders = new ArrayList<>();
 
     //singleton
-    public Company(){
+    private Company(){
     }
     public static Company getInstance() {
         if (instance==null){
             instance=new Company();
         }
         return instance;
-    }
-
-    public Set<Local> getLocals() {
-        return locals;
-    }
-
-    public void setLocals(Set<Local> locals) {
-        this.locals = locals;
-    }
-
-    public List<Account> getCostumers() {
-        return costumers;
     }
 
     public void setCostumers(ArrayList<Account> costumers) {
@@ -54,37 +46,5 @@ public class Company {
                 this.getDrivers().add((Driver)account);
             }
         }
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-    }
-
-    public List<Driver> getDrivers() {
-        return drivers;
-    }
-
-    public void setDrivers(ArrayList<Driver> drivers) {
-        this.drivers = drivers;
-    }
-
-    public List<Admin> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(ArrayList<Admin> admins) {
-        this.admins = admins;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(ArrayList<Order> orders) {
-        this.orders = orders;
     }
 }

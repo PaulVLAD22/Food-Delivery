@@ -1,11 +1,14 @@
 package model.local;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
-@Getter
-@Setter
+
+@Data
+@NoArgsConstructor
 public class Product {
     private static int productID =0;
     private int id;

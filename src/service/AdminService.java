@@ -138,6 +138,7 @@ public class AdminService {
                     System.out.println("Enter Y coordinate:");
                     int coordinateY = scanner.nextInt();
                     company.getLocals().add(new Local(localName,new Menu(),new Location(new Address(country,city,street),new Coordinate(coordinateX,coordinateY))));
+
                     break;
                 case 10:
                     basicService.displayMainMenu(company);

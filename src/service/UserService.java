@@ -71,7 +71,12 @@ public class UserService {
                     }
                     try {
                         Driver closestDriver = closestDriver(chosenLocal, company);
-                        Order order = new Order(user, closestDriver, chosenLocal, order_products);
+                        Order order = Order.builder().
+                                user(user).
+                                driver(closestDriver).
+                                local(chosenLocal).
+                                productsQuantity(order_products).build();
+
                         company.getOrders().add(order);
                         closestDriver.setCurrentOrder(order);
                         double totalDistance = calculateDistance(chosenLocal.getLocation().getCoordinate(), closestDriver.getCoordinate()) +

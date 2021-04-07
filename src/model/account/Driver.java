@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import model.location.Coordinate;
 import model.order.Order;
+
 @Getter
 @Setter
 public class Driver extends Account {

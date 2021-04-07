@@ -1,19 +1,14 @@
 package model.location;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class Coordinate {
-
     private int x;
     private int y;
 
-    public Coordinate(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
     @Override
     public String toString(){
         return x+"-"+y;
