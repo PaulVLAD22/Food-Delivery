@@ -12,12 +12,20 @@ import model.local.Product;
 import model.location.Location;
 import model.order.Order;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdminService {
     private BasicService basicService = new BasicService();
     private int choice;
     private Scanner scanner = new Scanner(System.in);
+    private final String DIRECTORY_PATH = "resources/admins";
+    private final String FILE_PATH = DIRECTORY_PATH + "/admins.csv";
 
     private void changeLocalName(Local local) {
         local.setName(scanner.next());
@@ -147,6 +155,33 @@ public class AdminService {
                     System.out.println("Choose a valid option");
             }
         }
+    }
+    public ArrayList<Admin> readAdmins(){
+        ArrayList<Admin> admins = new ArrayList<>();
 
+        String filename = FILE_PATH;
+        try {
+            BufferedReader reader = Files.newBufferedReader(Paths.get(filename));
+            String line = "";
+            while((line = reader.readLine()) != null) {
+                String [] information = line.split(",");
+
+                String username = information[0];
+                String email = information[1];
+                String password = information[2];
+
+                admins.add(new Admin(username,email,password));
+
+                for (String s : information) {
+                    System.out.println(s);
+                }
+            }
+        } catch (NoSuchFileException e) {
+            System.out.println("The file with the name " + filename + " doesn't exist.");
+        } catch (IOException e) {
+            System.out.println(e.getClass() + " " + e.getMessage());
+        }
+
+        return admins;
     }
 }

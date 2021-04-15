@@ -1,5 +1,6 @@
 package model.account;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import model.location.Coordinate;

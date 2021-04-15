@@ -2,7 +2,16 @@ package service;
 
 import model.Company;
 import model.account.Driver;
+import model.account.User;
+import model.location.Coordinate;
 
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DriverService{
@@ -44,6 +53,25 @@ public class DriverService{
             }
         }
 
+    }
+    public ArrayList<Driver> readDrivers(){
+        ArrayList<Driver> drivers = new ArrayList<>();
+        String filename = basicService.DRIVERS_PATH;
+        List<String> fileOutput = basicService.readService.read(filename);
+
+        for (String line : fileOutput) {
+            String [] information = line.split(",");
+            String username = information[0];
+            String email = information[1];
+            String password = information[2];
+            String[] coordinates = information[3].split(":");
+            int coordinateX = Integer.parseInt(coordinates[0]);
+            int coordinateY = Integer.parseInt(coordinates[1]);
+
+            drivers.add(new Driver(username, email, new Coordinate(coordinateX, coordinateY), password));
+        }
+
+        return drivers;
     }
 
 
