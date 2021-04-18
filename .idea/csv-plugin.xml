@@ -52,6 +52,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\src\service\AdminService.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\service\BasicService.java">
           <value>
             <Attribute>

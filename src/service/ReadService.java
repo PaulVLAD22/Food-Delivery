@@ -27,7 +27,7 @@ public class ReadService {
 
     public List<String> read (String filename){
 
-        List<String> output = new ArrayList<String>();
+        List<String> output = new ArrayList<>();
         try {
             BufferedReader reader = Files.newBufferedReader(Paths.get(filename));
             String line = "";

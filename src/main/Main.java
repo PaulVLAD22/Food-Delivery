@@ -11,10 +11,7 @@ import model.local.Local;
 import model.local.Menu;
 import model.local.Product;
 import model.location.Location;
-import service.AdminService;
-import service.BasicService;
-import service.DriverService;
-import service.UserService;
+import service.*;
 
 import java.util.*;
 
@@ -26,6 +23,8 @@ public class Main {
         DriverService driverService = new DriverService();
         AdminService adminService = new AdminService();
 
+        LocalService localService= new LocalService();
+
         //singleton
         Company company = Company.getInstance();
 
@@ -36,17 +35,13 @@ public class Main {
         ArrayList<User> users = userService.readUsers();
         ArrayList<Driver> drivers = driverService.readDrivers();
         ArrayList<Admin> admins = adminService.readAdmins();
-        Set<Local> locals = basicService.readLocals();
+        Set<Local> locals = localService.readLocals();
 
         ArrayList<Account> costumers = new ArrayList<>();
         costumers.addAll(users);
         costumers.addAll(drivers);
 
         company.setAdmins(admins);
-
-
-
-
         company.setLocals(locals);
 
         costumers.add(a);

@@ -139,13 +139,16 @@ public class AdminService {
                     System.out.println("City:");
                     String city= scanner.next();
                     System.out.println("Street name:");
-                    scanner.next();
+                    scanner.nextLine();
                     String street = scanner.nextLine();
+                    System.out.println(street);
                     System.out.println("Enter X coordinate:");
                     int coordinateX = scanner.nextInt();
                     System.out.println("Enter Y coordinate:");
                     int coordinateY = scanner.nextInt();
                     company.getLocals().add(new Local(localName,new Menu(),new Location(new Address(country,city,street),new Coordinate(coordinateX,coordinateY))));
+                    String output=localName+","+"null"+","+country+":"+city+":"+street+","+coordinateX+":"+coordinateY;
+                    basicService.writeService.writeToFile(basicService.LOCALS_DIRECTORY,basicService.LOCALS_PATH, output);
 
                     break;
                 case 10:
@@ -171,10 +174,6 @@ public class AdminService {
                 String password = information[2];
 
                 admins.add(new Admin(username,email,password));
-
-                for (String s : information) {
-                    System.out.println(s);
-                }
             }
         } catch (NoSuchFileException e) {
             System.out.println("The file with the name " + filename + " doesn't exist.");

@@ -189,7 +189,7 @@ public class BasicService {
         return null;
 
     }
-    protected int readIntChoice(){
+    int readIntChoice(){
         int choice;
         while (true) {
             try {
@@ -208,33 +208,8 @@ public class BasicService {
         }
         return 0;
     }
-    public Set<Local> readLocals(){
-        Set<Local> locals = new HashSet<>();
-        String filename = this.LOCALS_PATH;
-        List<String> fileOutput = this.readService.read(filename);
 
-        for (String line : fileOutput) {
-            String [] information = line.split(",");
-            String name = information[0];
-            String [] productStrings= information[1].split(";");
-            Menu menu = new Menu();
-            Location location = new Location();
-            for (String productString : productStrings){
-                String [] productNameQuantity = productString.split(":");
-                System.out.println(productString);
-                menu.getProducts().add(new Product(productNameQuantity[0],Integer.parseInt(productNameQuantity[1])));
-            }
-            String [] addressString = information[2].split(":");
-            String [] coordinates = information[3].split(":");
-            location.setAddress(new Address(addressString[0],addressString[1],addressString[2]));
-            location.setCoordinate(new Coordinate(Integer.parseInt(coordinates[0]),Integer.parseInt(coordinates[1])));
-
-            locals.add(new Local(name,menu,location));
-        }
-        return locals;
-    }
-
-    protected void writeNewUser(User user){
+    private void writeNewUser(User user){
         String username=user.getUsername();
         String email = user.getEmail();
         String password = user.getPassword();
@@ -244,7 +219,7 @@ public class BasicService {
         writeService.writeToFile(USERS_DIRECTORY,USERS_PATH,
                 output);
     }
-    protected void writeNewDriver(Driver driver){
+    private void writeNewDriver(Driver driver){
         String username=driver.getUsername();
         String email =driver.getEmail();
         String password = driver.getPassword();
