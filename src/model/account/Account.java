@@ -1,11 +1,14 @@
 package model.account;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 import model.location.Coordinate;
 
 import java.util.Objects;
 
 @Data
+@SuperBuilder
 public abstract class Account {
     protected static int accountID =0;
     protected int id;
@@ -32,7 +35,7 @@ public abstract class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return username.equals(account.username) &&
+        return username.equals(account.username) ||
                 email.equals(account.email);
     }
 

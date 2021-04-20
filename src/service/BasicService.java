@@ -31,9 +31,6 @@ public class BasicService {
     private final Path AUDIT_DIRECTORY = Path.of("resources/audit");
     private final Path AUDIT_PATH = Path.of(AUDIT_DIRECTORY + "/audit.csv");
 
-    //public final WriteService writeService = WriteService.getInstance();
-    //public final ReadService readService = ReadService.getInstance();
-
     CsvWriter<Action> actionCsvWriter = new CsvWriter<>(AUDIT_DIRECTORY, AUDIT_PATH);
 
     public void displayMainMenu(Company company) {
@@ -116,12 +113,10 @@ public class BasicService {
         System.out.println("Email:");
         String email = scanner.next();
 
-        for (User user : company.getUsers()) {
+        User newUser = User.builder().username(username).email(email).build();
 
-            if (user.getEmail().equals(email) || user.getUsername().equals(username)) {
-                throw new UsernameOrEmailAlreadyTaken();
-            }
-        }
+        if(company.getUsers().stream().anyMatch(driver -> driver.equals(newUser)))
+            throw new UsernameOrEmailAlreadyTaken();
 
         System.out.println("Password");
         String password = scanner.next();
@@ -146,11 +141,13 @@ public class BasicService {
         System.out.println("Email:");
         String email = scanner.next();
 
-        for (Driver driver : company.getDrivers()) {
-            if (driver.getEmail().equals(email) || driver.getUsername().equals(username)) {
-                throw new UsernameOrEmailAlreadyTaken();
-            }
-        }
+        Driver newDriver = Driver.builder().
+                username(username).
+                email(email).build();
+
+        if(company.getDrivers().stream().anyMatch(driver -> driver.equals(newDriver)))
+            throw new UsernameOrEmailAlreadyTaken();
+
 
         System.out.println("Password");
         String password = scanner.next();
@@ -158,6 +155,7 @@ public class BasicService {
         int coordinateX = readIntChoice();
         System.out.println("Coordinate Y:");
         int coordinateY = readIntChoice();
+
         Driver driver = new Driver(username, email, new Coordinate(coordinateX, coordinateY), password);
         company.getCostumers().add(driver);
         company.getDrivers().add(driver);
@@ -169,22 +167,14 @@ public class BasicService {
 
     private Account login(String username, String password, List<Account> accounts) {
         actionCsvWriter.write(new Action("Log in attempt"));
-        for (Account account : accounts) {
-            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
-                return account;
-            }
-        }
-        return null;
+        return accounts.stream().filter(account -> account.getUsername().equals(username)
+                && account.getPassword().equals(password)).findFirst().orElse(null);
     }
 
     private Admin loginAdmin(String username, String password, List<Admin> admins) {
         actionCsvWriter.write(new Action("Admin log in attempt"));
-        for (Admin admin : admins) {
-            if (admin.getUsername().equals(username) && admin.getPassword().equals(password)) {
-                return admin;
-            }
-        }
-        return null;
+        return admins.stream().filter(account -> account.getUsername().equals(username)
+                && account.getPassword().equals(password)).findFirst().orElse(null);
 
     }
 

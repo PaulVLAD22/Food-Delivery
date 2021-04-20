@@ -55,12 +55,7 @@ public class UserService {
             switch (choice) {
                 case 1:
                     basicService.actionCsvWriter.write(new Action("Menu Viewed set"));
-                    for (Local local : locals) {
-                        System.out.println("Local " + local.getName());
-                        for (Product product : local.getMenu().getProducts()) {
-                            System.out.println(product);
-                        }
-                    }
+                    locals.stream().forEach(local -> System.out.println(local));
                     break;
                 case 2:
                     ArrayList<Local> locals_arr = new ArrayList<>(locals);
@@ -74,16 +69,16 @@ public class UserService {
 
                     Local chosenLocal = locals_arr.get(choice);
                     List<Product> localProducts = chosenLocal.getMenu().getProducts();
-                    for (Product product : localProducts) {
-                        System.out.println(localProducts.indexOf(product) + 1);
+                    localProducts.stream().forEach(product ->{
+                        System.out.println(localProducts.indexOf(product)+1);
                         System.out.println(product);
-                    }
+                    });
+
                     Map<Product, Integer> order_products = new HashMap<Product, Integer>();
                     System.out.println("Enter number of products you want to buy \n 1:2 means 2 pieces of product number 1");
                     String input = scanner.next();
                     String[] entry = input.split(",");
                     for (String s : entry) {
-                        //System.out.println(s);
                         String[] info = s.split(":");
                         int productNumber = parseInt(info[0]);
                         int productQuantity = parseInt(info[1]);
@@ -101,7 +96,7 @@ public class UserService {
                         closestDriver.setCurrentOrder(order);
                         double totalDistance = calculateDistance(chosenLocal.getLocation().getCoordinate(), closestDriver.getCoordinate()) +
                                 calculateDistance(chosenLocal.getLocation().getCoordinate(), user.getCoordinate());
-                        //unitati de masura pe 10;
+
                         System.out.println("The order will arrive in :" + totalDistance / 10);
                         System.out.println("The driver will travel with speed of a 10 units per minute");
 
@@ -141,6 +136,7 @@ public class UserService {
         List<Driver> drivers = company.getDrivers();
         double minimum_distance = Double.POSITIVE_INFINITY;
         int driver_index = -1;
+
         for (Driver driver : drivers) {
             double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getLocation().getCoordinate());
             if (currentDistance < 1000 && currentDistance < minimum_distance) {

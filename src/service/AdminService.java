@@ -76,12 +76,10 @@ public class AdminService {
                     case 3:
                         System.out.println("Enter product name:");
                         productName = scanner.next();
-                        Product productToDelete = null;
-                        for (Product product : chosenLocal.getMenu().getProducts()) {
-                            if (product.getName().equals(productName)) {
-                                productToDelete = product;
-                            }
-                        }
+
+                        Product productToDelete =chosenLocal.getMenu().getProducts().stream().
+                                filter(product ->product.getName().equals(productName)).findFirst().orElse(null);
+
                         chosenLocal.getMenu().getProducts().remove(productToDelete);
                         break;
                     case 4:
