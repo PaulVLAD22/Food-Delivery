@@ -2,6 +2,7 @@ package service;
 
 import exception.NoDriverInRangeException;
 import model.Company;
+import model.audit.Action;
 import model.location.Coordinate;
 import model.account.Driver;
 import model.account.User;
@@ -41,7 +42,7 @@ public class UserService {
 
             switch (choice) {
                 case 1:
-                    basicService.auditMessage("Menu Viewed set");
+                    basicService.actionCsvWriter.write(new Action("Menu Viewed set"));
                     for (Local local : locals) {
                         System.out.println("Local " + local.getName());
                         for (Product product : local.getMenu().getProducts()) {
@@ -92,22 +93,22 @@ public class UserService {
                         System.out.println("The order will arrive in :" + totalDistance / 10);
                         System.out.println("The driver will travel with speed of a 10 units per minute");
 
-                        basicService.auditMessage("Order set");
+                        basicService.actionCsvWriter.write(new Action("Order set"));
                     }
                     catch (NoDriverInRangeException e){
                         e.printStackTrace();
                     }
                     break;
                 case 3:
-                    basicService.auditMessage("Logout");
+                    basicService.actionCsvWriter.write(new Action("Logout"));
                     basicService.displayMainMenu(company);
                     break;
                 case 4:
-                    basicService.auditMessage("Account Deletion attempt");
+                    basicService.actionCsvWriter.write(new Action("Account Deletion Attempt"));
                     System.out.println("Are you sure? (1-yes)");
                     choice = basicService.readIntChoice();
                     if (choice==1) {
-                        basicService.auditMessage("Account Deletion");
+                        basicService.actionCsvWriter.write(new Action("Account Deletion"));
                         company.getUsers().remove(user);
                     }
                     else{
@@ -143,23 +144,23 @@ public class UserService {
         return drivers.get(driver_index);
     }
 
-    public ArrayList<User> readUsers(){
-        ArrayList<User> users = new ArrayList<>();
-        String filename = basicService.USERS_PATH;
-        List<String> fileOutput = basicService.readService.read(filename);
-
-        for (String line : fileOutput) {
-            String [] information = line.split(",");
-            String username = information[0];
-            String email = information[1];
-            String password = information[2];
-            String[] coordinates = information[3].split(":");
-            int coordinateX = Integer.parseInt(coordinates[0]);
-            int coordinateY = Integer.parseInt(coordinates[1]);
-
-            users.add(new User(username, email, new Coordinate(coordinateX, coordinateY), password));
-        }
-        return users;
-    }
+//    public ArrayList<User> readUsers(){
+//        ArrayList<User> users = new ArrayList<>();
+//        String filename = basicService.USERS_PATH;
+//        List<String> fileOutput = basicService.readService.read(filename);
+//
+//        for (String line : fileOutput) {
+//            String [] information = line.split(",");
+//            String username = information[0];
+//            String email = information[1];
+//            String password = information[2];
+//            String[] coordinates = information[3].split(":");
+//            int coordinateX = Integer.parseInt(coordinates[0]);
+//            int coordinateY = Integer.parseInt(coordinates[1]);
+//
+//            users.add(new User(username, email, new Coordinate(coordinateX, coordinateY), password));
+//        }
+//        return users;
+//    }
 
 }

@@ -2,6 +2,7 @@ package service;
 
 import exception.UsernameOrEmailAlreadyTaken;
 import model.Company;
+import model.audit.Action;
 import model.local.Local;
 import model.local.Menu;
 import model.local.Product;
@@ -16,6 +17,7 @@ import model.location.Location;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.sql.Timestamp;
@@ -24,20 +26,29 @@ import java.util.*;
 public class BasicService {
     private Scanner scanner = new Scanner(System.in);
     private int choice;
-    private final String AUDIT_DIRECTORY = "resources/audit";
-    private final String AUDIT_PATH = AUDIT_DIRECTORY + "/audit.csv";
 
-    public final String DRIVERS_DIRECTORY = "resources/drivers";
-    public final String DRIVERS_PATH = DRIVERS_DIRECTORY+"/drivers.csv";
+    private final Path AUDIT_DIRECTORY = Path.of("resources/audit");
+    private final Path AUDIT_PATH = Path.of (AUDIT_DIRECTORY + "/audit.csv");
 
-    public final String USERS_DIRECTORY = "resources/users";
-    public final String USERS_PATH = USERS_DIRECTORY + "/users.csv";
+    public final Path ADMIN_DIRECTORY = Path.of("resources/admins");
+    public final Path ADMIN_PATH = Path.of (ADMIN_DIRECTORY + "/admins.csv");
 
-    public final String LOCALS_DIRECTORY = "resources/locals";
-    public final String LOCALS_PATH = LOCALS_DIRECTORY + "/locals.csv";
+    public final Path DRIVERS_DIRECTORY = Path.of("resources/drivers");
+    public final Path DRIVERS_PATH = Path.of (DRIVERS_DIRECTORY+"/drivers.csv");
 
-    public final WriteService writeService = WriteService.getInstance();
-    public final ReadService readService = ReadService.getInstance();
+    public final Path USERS_DIRECTORY = Path.of("resources/users");
+    public final Path USERS_PATH = Path.of(USERS_DIRECTORY + "/users.csv");
+
+    public final Path LOCALS_DIRECTORY = Path.of("resources/locals");
+    public final Path LOCALS_PATH = Path.of(LOCALS_DIRECTORY + "/locals.csv");
+
+    //public final WriteService writeService = WriteService.getInstance();
+    //public final ReadService readService = ReadService.getInstance();
+
+    public CsvWriter<User> userCsvWriter = new CsvWriter<>(USERS_DIRECTORY,USERS_PATH);
+    public CsvWriter<Driver> driverCsvWriter = new CsvWriter<>(DRIVERS_DIRECTORY,DRIVERS_PATH);
+    public CsvWriter<Local> localCsvWriter = new CsvWriter<>(LOCALS_DIRECTORY,LOCALS_PATH);
+    public CsvWriter<Action> actionCsvWriter = new CsvWriter<>(AUDIT_DIRECTORY,AUDIT_PATH);
 
     public void displayMainMenu(Company company){
         while (true) {
@@ -139,8 +150,8 @@ public class BasicService {
         company.getUsers().add(user);
 
 
-        this.auditMessage("User Signup");
-        this.writeNewUser(user);
+        actionCsvWriter.write(new Action("User Sign up"));
+        userCsvWriter.write(user);
     }
 
     private void signUpDriver(Company company ) throws UsernameOrEmailAlreadyTaken {
@@ -166,12 +177,12 @@ public class BasicService {
         company.getCostumers().add(driver);
         company.getDrivers().add(driver);
 
-        this.auditMessage("Driver Signup");
-        this.writeNewDriver(driver);
+        actionCsvWriter.write(new Action("Driver Sign up"));
+        driverCsvWriter.write(driver);
     }
 
     private Account login(String username,String password, List<Account> accounts){
-        this.auditMessage("Login Attempt");
+        actionCsvWriter.write(new Action("Log in attempt"));
         for (Account account : accounts){
             if (account.getUsername().equals(username) && account.getPassword().equals(password)){
                 return account;
@@ -180,7 +191,7 @@ public class BasicService {
         return null;
     }
     private Admin loginAdmin(String username,String password, List<Admin> admins){
-        this.auditMessage("Admin Login Attempt");
+        actionCsvWriter.write(new Action("Admin log in attempt"));
         for (Admin admin : admins){
             if (admin.getUsername().equals(username) && admin.getPassword().equals(password)){
                 return admin;
@@ -209,30 +220,25 @@ public class BasicService {
         return 0;
     }
 
-    private void writeNewUser(User user){
-        String username=user.getUsername();
-        String email = user.getEmail();
-        String password = user.getPassword();
-        int coordinateX = user.getCoordinate().getX();
-        int coordinateY = user.getCoordinate().getY();
-        String output = username+","+email+","+password+","+coordinateX+":"+coordinateY;
-        writeService.writeToFile(USERS_DIRECTORY,USERS_PATH,
-                output);
-    }
-    private void writeNewDriver(Driver driver){
-        String username=driver.getUsername();
-        String email =driver.getEmail();
-        String password = driver.getPassword();
-        int coordinateX = driver.getCoordinate().getX();
-        int coordinateY = driver.getCoordinate().getY();
-        String output = username+","+email+","+password+","+coordinateX+":"+coordinateY;
-        writeService.writeToFile(DRIVERS_DIRECTORY,DRIVERS_PATH,
-                output);
-    }
-
-    public void auditMessage(String message) {
-        writeService.writeToFile(AUDIT_DIRECTORY,AUDIT_PATH,
-                "action: " +message+",time: "+ new Timestamp(System.currentTimeMillis()));
-    }
+//    private void writeNewUser(User user){
+//        String username=user.getUsername();
+//        String email = user.getEmail();
+//        String password = user.getPassword();
+//        int coordinateX = user.getCoordinate().getX();
+//        int coordinateY = user.getCoordinate().getY();
+//        String output = username+","+email+","+password+","+coordinateX+":"+coordinateY;
+//        writeService.writeToFile(USERS_DIRECTORY,USERS_PATH,
+//                output);
+//    }
+//    private void writeNewDriver(Driver driver){
+//        String username=driver.getUsername();
+//        String email =driver.getEmail();
+//        String password = driver.getPassword();
+//        int coordinateX = driver.getCoordinate().getX();
+//        int coordinateY = driver.getCoordinate().getY();
+//        String output = username+","+email+","+password+","+coordinateX+":"+coordinateY;
+//        writeService.writeToFile(DRIVERS_DIRECTORY,DRIVERS_PATH,
+//                output);
+//    }
 
 }

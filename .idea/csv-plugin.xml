@@ -66,6 +66,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\src\service\CsvReader.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\service\UserService.java">
           <value>
             <Attribute>

@@ -36,7 +36,7 @@ public class Company {
         return instance;
     }
 
-    public void setCostumers(ArrayList<Account> costumers) {
+    public void setCostumers(List<Account> costumers) {
         this.costumers = costumers;
         for (Account account : costumers){
             if (account instanceof User){
