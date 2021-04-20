@@ -28,13 +28,12 @@ public class Main {
         //dezavantaje: instante multiple de CsvWriter
         //avantaje: toata logica scrierii e tinuta intr-o singura clasa
 
-        UserService userService = new UserService();
-        DriverService driverService = new DriverService();
-        LocalService localService = new LocalService();
-        AdminService adminService = new AdminService();
-        BasicService basicService = new BasicService();
+        UserService userService = UserService.getInstance();
+        DriverService driverService = DriverService.getInstance();
+        LocalService localService = LocalService.getInstance();
+        AdminService adminService = AdminService.getInstance();
+        BasicService basicService = BasicService.getInstance();
 
-        //singleton
         Company company = Company.getInstance();
 
         List<User> users = userService.readUsers();

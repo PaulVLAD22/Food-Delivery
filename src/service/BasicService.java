@@ -13,6 +13,18 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class BasicService {
+    private static BasicService INSTANCE;
+
+    private BasicService(){
+
+    }
+    public static BasicService getInstance(){
+        if (INSTANCE == null){
+            INSTANCE =  new BasicService();
+        }
+        return INSTANCE;
+    }
+
     private Scanner scanner = new Scanner(System.in);
     private int choice;
 
@@ -22,7 +34,7 @@ public class BasicService {
     //public final WriteService writeService = WriteService.getInstance();
     //public final ReadService readService = ReadService.getInstance();
 
-    public CsvWriter<Action> actionCsvWriter = new CsvWriter<>(AUDIT_DIRECTORY, AUDIT_PATH);
+    CsvWriter<Action> actionCsvWriter = new CsvWriter<>(AUDIT_DIRECTORY, AUDIT_PATH);
 
     public void displayMainMenu(Company company) {
         while (true) {
@@ -43,7 +55,7 @@ public class BasicService {
                     Account account = this.login(username, password, company.getCostumers());
 
                     if (account instanceof User) {
-                        UserService userService = new UserService();
+                        UserService userService = UserService.getInstance();
                         userService.displayMenu((User) account, company);
                     } else {
                         System.out.println("Invalid Login");
@@ -56,7 +68,7 @@ public class BasicService {
                     String adminPassword = scanner.next();
                     Admin admin = this.loginAdmin(adminUsername, adminPassword, company.getAdmins());
                     if (admin != null) {
-                        AdminService adminService = new AdminService();
+                        AdminService adminService = AdminService.getInstance();
                         adminService.displayMenu(admin, company);
                     }
                     break;
@@ -82,7 +94,7 @@ public class BasicService {
                     Account accountDriver = this.login(usernameDriver, passwordDriver, company.getCostumers());
 
                     if (accountDriver instanceof Driver) {
-                        DriverService driverService = new DriverService();
+                        DriverService driverService = DriverService.getInstance();
                         driverService.displayMenu((Driver) accountDriver, company);
                     } else {
                         System.out.println("Invalid Login");
@@ -123,7 +135,7 @@ public class BasicService {
 
 
         actionCsvWriter.write(new Action("User Sign up"));
-        UserService userService = new UserService();
+        UserService userService = UserService.getInstance();
         userService.write(user);
     }
 
@@ -151,7 +163,7 @@ public class BasicService {
         company.getDrivers().add(driver);
 
         actionCsvWriter.write(new Action("Driver Sign up"));
-        DriverService driverService = new DriverService();
+        DriverService driverService = DriverService.getInstance();
         driverService.write(driver);
     }
 
@@ -194,26 +206,5 @@ public class BasicService {
         }
         return 0;
     }
-
-//    private void writeNewUser(User user){
-//        String username=user.getUsername();
-//        String email = user.getEmail();
-//        String password = user.getPassword();
-//        int coordinateX = user.getCoordinate().getX();
-//        int coordinateY = user.getCoordinate().getY();
-//        String output = username+","+email+","+password+","+coordinateX+":"+coordinateY;
-//        writeService.writeToFile(USERS_DIRECTORY,USERS_PATH,
-//                output);
-//    }
-//    private void writeNewDriver(Driver driver){
-//        String username=driver.getUsername();
-//        String email =driver.getEmail();
-//        String password = driver.getPassword();
-//        int coordinateX = driver.getCoordinate().getX();
-//        int coordinateY = driver.getCoordinate().getY();
-//        String output = username+","+email+","+password+","+coordinateX+":"+coordinateY;
-//        writeService.writeToFile(DRIVERS_DIRECTORY,DRIVERS_PATH,
-//                output);
-//    }
 
 }

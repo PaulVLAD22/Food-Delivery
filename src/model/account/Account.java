@@ -1,13 +1,11 @@
 package model.account;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import model.location.Coordinate;
 
 import java.util.Objects;
-@Getter
-@Setter
+
+@Data
 public abstract class Account {
     protected static int accountID =0;
     protected int id;
@@ -22,6 +20,7 @@ public abstract class Account {
 
     public Account(String username, String email,Coordinate coordinate, String password) {
         accountID+=1;
+        this.id=accountID;
         this.username = username;
         this.email=email;
         this.password = password;

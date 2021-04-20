@@ -17,13 +17,24 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AdminService {
-    private BasicService basicService = new BasicService();
+    private static final AdminService INSTANCE = new AdminService();
+
+    private AdminService() {
+
+    }
+
+    public static AdminService getInstance() {
+        return INSTANCE;
+    }
+
+    private BasicService basicService = BasicService.getInstance();
     private int choice;
     private Scanner scanner = new Scanner(System.in);
     private CsvReader<Admin> adminCsvReader = new CsvReader<>();
 
-    public final Path ADMIN_DIRECTORY = Path.of("resources/admins");
-    public final Path ADMIN_PATH = Path.of (ADMIN_DIRECTORY + "/admins.csv");
+    private final Path ADMIN_DIRECTORY = Path.of("resources/admins");
+    private final Path ADMIN_PATH = Path.of(ADMIN_DIRECTORY + "/admins.csv");
+
 
     private void changeLocalName(Local local) {
         local.setName(scanner.next());
@@ -41,7 +52,7 @@ public class AdminService {
                 chosenLocal = local;
             }
         }
-        if (chosenLocal!=null) {
+        if (chosenLocal != null) {
             while (true) {
                 System.out.println("1.Change Local Name");
                 System.out.println("2.Add product");
@@ -86,10 +97,9 @@ public class AdminService {
                         System.out.println("Choose a valid option");
                 }
             }
-        }
-        else{
+        } else {
             System.out.println("Invalid Details");
-            displayMenu(admin,company);
+            displayMenu(admin, company);
         }
 
     }
@@ -121,7 +131,7 @@ public class AdminService {
                     }
                     break;
                 case 4:
-                    for (Order order: company.getOrders()){
+                    for (Order order : company.getOrders()) {
                         System.out.println(order);
                     }
                     break;
@@ -130,12 +140,12 @@ public class AdminService {
                     break;
                 case 6:
                     System.out.println("Enter New Local Name:");
-                    String localName = scanner.next ();
+                    String localName = scanner.next();
                     System.out.println("Location information:");
                     System.out.println("Country:");
                     String country = scanner.next();
                     System.out.println("City:");
-                    String city= scanner.next();
+                    String city = scanner.next();
                     System.out.println("Street name:");
                     scanner.nextLine();
                     String street = scanner.nextLine();
@@ -144,12 +154,11 @@ public class AdminService {
                     int coordinateX = scanner.nextInt();
                     System.out.println("Enter Y coordinate:");
                     int coordinateY = scanner.nextInt();
-                    Local local = new Local(localName,new Menu(),new Location(new Address(country,city,street),new Coordinate(coordinateX,coordinateY)));
+                    Local local = new Local(localName, new Menu(), new Location(new Address(country, city, street), new Coordinate(coordinateX, coordinateY)));
                     company.getLocals().add(local);
-                    LocalService localService = new LocalService();
+
+                    LocalService localService = LocalService.getInstance();
                     localService.write(local);
-                    //String output=localName+","+"null"+","+country+":"+city+":"+street+","+coordinateX+":"+coordinateY;
-                    //basicService.writeService.writeToFile(basicService.LOCALS_DIRECTORY,basicService.LOCALS_PATH, output);
                     break;
                 case 10:
                     basicService.displayMainMenu(company);
@@ -159,31 +168,8 @@ public class AdminService {
             }
         }
     }
-    public List<Admin> read(){
+
+    public List<Admin> read() {
         return adminCsvReader.read(ADMIN_PATH);
     }
-//    public ArrayList<Admin> readAdmins(){
-//        ArrayList<Admin> admins = new ArrayList<>();
-//
-//        String filename = FILE_PATH;
-//        try {
-//            BufferedReader reader = Files.newBufferedReader(Paths.get(filename));
-//            String line = "";
-//            while((line = reader.readLine()) != null) {
-//                String [] information = line.split(",");
-//
-//                String username = information[0];
-//                String email = information[1];
-//                String password = information[2];
-//
-//                admins.add(new Admin(username,email,password));
-//            }
-//        } catch (NoSuchFileException e) {
-//            System.out.println("The file with the name " + filename + " doesn't exist.");
-//        } catch (IOException e) {
-//            System.out.println(e.getClass() + " " + e.getMessage());
-//        }
-//
-//        return admins;
-//    }
 }

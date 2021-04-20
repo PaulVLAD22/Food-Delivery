@@ -16,16 +16,25 @@ import java.util.*;
 import static java.lang.Integer.*;
 
 public class UserService {
-    private BasicService basicService = new BasicService();
+    private static final UserService INSTANCE = new UserService();
+
+    private UserService() {
+
+    }
+
+    public static UserService getInstance() {
+        return INSTANCE;
+    }
+
+    private BasicService basicService = BasicService.getInstance();
     private int choice;
     private Scanner scanner = new Scanner(System.in);
 
-    public final Path USERS_DIRECTORY = Path.of("resources/users");
-    public final Path USERS_PATH = Path.of(USERS_DIRECTORY + "/users.csv");
+    private final Path USERS_DIRECTORY = Path.of("resources/users");
+    private final Path USERS_PATH = Path.of(USERS_DIRECTORY + "/users.csv");
 
     private CsvReader<User> userCsvReader = new CsvReader<>();
-    public CsvWriter<User> userCsvWriter = new CsvWriter<>(USERS_DIRECTORY, USERS_PATH);
-
+    private CsvWriter<User> userCsvWriter = new CsvWriter<>(USERS_DIRECTORY, USERS_PATH);
 
 
     public void displayMenu(User user, Company company) {
@@ -57,16 +66,16 @@ public class UserService {
                     ArrayList<Local> locals_arr = new ArrayList<>(locals);
                     System.out.println("Choose the local:");
                     for (Local local : locals_arr) {
-                        System.out.println(locals_arr.indexOf(local)+1);
+                        System.out.println(locals_arr.indexOf(local) + 1);
                         System.out.println(local);
                     }
                     choice = basicService.readIntChoice();
-                    choice-=1;
+                    choice -= 1;
 
                     Local chosenLocal = locals_arr.get(choice);
                     List<Product> localProducts = chosenLocal.getMenu().getProducts();
                     for (Product product : localProducts) {
-                        System.out.println(localProducts.indexOf(product)+1);
+                        System.out.println(localProducts.indexOf(product) + 1);
                         System.out.println(product);
                     }
                     Map<Product, Integer> order_products = new HashMap<Product, Integer>();
@@ -97,8 +106,7 @@ public class UserService {
                         System.out.println("The driver will travel with speed of a 10 units per minute");
 
                         basicService.actionCsvWriter.write(new Action("Order set"));
-                    }
-                    catch (NoDriverInRangeException e){
+                    } catch (NoDriverInRangeException e) {
                         e.printStackTrace();
                     }
                     break;
@@ -110,11 +118,10 @@ public class UserService {
                     basicService.actionCsvWriter.write(new Action("Account Deletion Attempt"));
                     System.out.println("Are you sure? (1-yes)");
                     choice = basicService.readIntChoice();
-                    if (choice==1) {
+                    if (choice == 1) {
                         basicService.actionCsvWriter.write(new Action("Account Deletion"));
                         company.getUsers().remove(user);
-                    }
-                    else{
+                    } else {
                         System.out.println("Didn't delete account");
                     }
 
@@ -138,38 +145,22 @@ public class UserService {
             double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getLocation().getCoordinate());
             if (currentDistance < 1000 && currentDistance < minimum_distance) {
                 minimum_distance = currentDistance;
-                driver_index=drivers.indexOf(driver);
+                driver_index = drivers.indexOf(driver);
             }
         }
-        if (driver_index==-1){
+        if (driver_index == -1) {
             throw new NoDriverInRangeException();
         }
         return drivers.get(driver_index);
     }
-    public List<User> readUsers(){
+
+    public List<User> readUsers() {
         return userCsvReader.read(USERS_PATH);
     }
-    public void write(User user){
+
+    public void write(User user) {
         userCsvWriter.write(user);
     }
 
-//    public ArrayList<User> readUsers(){
-//        ArrayList<User> users = new ArrayList<>();
-//        String filename = basicService.USERS_PATH;
-//        List<String> fileOutput = basicService.readService.read(filename);
-//
-//        for (String line : fileOutput) {
-//            String [] information = line.split(",");
-//            String username = information[0];
-//            String email = information[1];
-//            String password = information[2];
-//            String[] coordinates = information[3].split(":");
-//            int coordinateX = Integer.parseInt(coordinates[0]);
-//            int coordinateY = Integer.parseInt(coordinates[1]);
-//
-//            users.add(new User(username, email, new Coordinate(coordinateX, coordinateY), password));
-//        }
-//        return users;
-//    }
 
 }

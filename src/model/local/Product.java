@@ -30,14 +30,4 @@ public class Product {
         return Double.compare(product.price, price) == 0 &&
                 name.equals(product.name);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price);
-    }
-
-    @Override
-    public String toString(){
-        return ("Product ID: " + this.id + " - " +this.name+" - "+this.price+"$");
-    }
 }

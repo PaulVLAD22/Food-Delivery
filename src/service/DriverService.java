@@ -8,8 +8,19 @@ import java.util.*;
 import java.util.Scanner;
 
 public class DriverService {
+    private static DriverService INSTANCE;
+
+    private DriverService(){
+
+    }
+    public static DriverService getInstance(){
+        if (INSTANCE==null){
+            INSTANCE= new DriverService();
+        }
+        return INSTANCE;
+    }
     private OrderService orderService = new OrderService();
-    private BasicService basicService = new BasicService();
+    private BasicService basicService = BasicService.getInstance();
     private int choice;
 
     public final Path DRIVERS_DIRECTORY = Path.of("resources/drivers");
@@ -60,26 +71,5 @@ public class DriverService {
     public void write(Driver driver) {
         driverCsvWriter.write(driver);
     }
-
-//    public ArrayList<Driver> readDrivers(){
-//        ArrayList<Driver> drivers = new ArrayList<>();
-//        String filename = basicService.DRIVERS_PATH.toString();
-//        List<String> fileOutput = basicService.readService.read(filename);
-//
-//        for (String line : fileOutput) {
-//            String [] information = line.split(",");
-//            String username = information[0];
-//            String email = information[1];
-//            String password = information[2];
-//            String[] coordinates = information[3].split(":");
-//            int coordinateX = Integer.parseInt(coordinates[0]);
-//            int coordinateY = Integer.parseInt(coordinates[1]);
-//
-//            drivers.add(new Driver(username, email, new Coordinate(coordinateX, coordinateY), password));
-//        }
-//
-//        return drivers;
-//    }
-
 
 }

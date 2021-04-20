@@ -1,8 +1,5 @@
 package model.account;
 
-import lombok.AllArgsConstructor;
-
-import lombok.NoArgsConstructor;
 import model.location.Coordinate;
 
 public class User extends Account {
