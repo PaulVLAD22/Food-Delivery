@@ -10,11 +10,7 @@ import model.local.Local;
 import model.local.Product;
 import model.order.Order;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.*;
 
 import static java.lang.Integer.*;
@@ -23,6 +19,13 @@ public class UserService {
     private BasicService basicService = new BasicService();
     private int choice;
     private Scanner scanner = new Scanner(System.in);
+
+    public final Path USERS_DIRECTORY = Path.of("resources/users");
+    public final Path USERS_PATH = Path.of(USERS_DIRECTORY + "/users.csv");
+
+    private CsvReader<User> userCsvReader = new CsvReader<>();
+    public CsvWriter<User> userCsvWriter = new CsvWriter<>(USERS_DIRECTORY, USERS_PATH);
+
 
 
     public void displayMenu(User user, Company company) {
@@ -142,6 +145,12 @@ public class UserService {
             throw new NoDriverInRangeException();
         }
         return drivers.get(driver_index);
+    }
+    public List<User> readUsers(){
+        return userCsvReader.read(USERS_PATH);
+    }
+    public void write(User user){
+        userCsvWriter.write(user);
     }
 
 //    public ArrayList<User> readUsers(){

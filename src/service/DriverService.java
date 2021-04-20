@@ -2,26 +2,25 @@ package service;
 
 import model.Company;
 import model.account.Driver;
-import model.account.User;
-import model.location.Coordinate;
 
+import java.nio.file.Path;
 import java.util.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DriverService{
+public class DriverService {
     private OrderService orderService = new OrderService();
     private BasicService basicService = new BasicService();
     private int choice;
 
-    public void displayMenu(Driver driver, Company company){
+    public final Path DRIVERS_DIRECTORY = Path.of("resources/drivers");
+    public final Path DRIVERS_PATH = Path.of(DRIVERS_DIRECTORY + "/drivers.csv");
+
+    private CsvReader<Driver> driverCsvReader = new CsvReader<>();
+    public CsvWriter<Driver> driverCsvWriter = new CsvWriter<>(DRIVERS_DIRECTORY, DRIVERS_PATH);
+
+    public void displayMenu(Driver driver, Company company) {
         Scanner scanner = new Scanner(System.in);
-        while (true){
+        while (true) {
             System.out.println("1.Confirm Delivery");
             System.out.println("2.View expected salary");
             System.out.println("3.Log Out");
@@ -30,23 +29,22 @@ public class DriverService{
 
             switch (choice) {
                 case 1:
-                    driver.setSalary(driver.getSalary()+orderService.calculateOrder(driver.getCurrentOrder())/10);
+                    driver.setSalary(driver.getSalary() + orderService.calculateOrder(driver.getCurrentOrder()) / 10);
                     driver.setCurrentOrder(null);
                     break;
                 case 2:
-                    System.out.println("Your Expected salary is "+ driver.getSalary());
+                    System.out.println("Your Expected salary is " + driver.getSalary());
                     break;
                 case 3:
                     basicService.displayMainMenu(company);
                     break;
                 case 4:
                     System.out.println("Are you sure? (1-yes/0-no)");
-                    choice= scanner.nextInt();
-                    if (choice==1) {
+                    choice = scanner.nextInt();
+                    if (choice == 1) {
                         company.getDrivers().remove(driver);
-                    }
-                    else{
-                        displayMenu(driver,company);
+                    } else {
+                        displayMenu(driver, company);
                     }
                 default:
                     System.out.println("Choose a valid option");
@@ -54,6 +52,15 @@ public class DriverService{
         }
 
     }
+
+    public List<Driver> read() {
+        return driverCsvReader.read(DRIVERS_PATH);
+    }
+
+    public void write(Driver driver) {
+        driverCsvWriter.write(driver);
+    }
+
 //    public ArrayList<Driver> readDrivers(){
 //        ArrayList<Driver> drivers = new ArrayList<>();
 //        String filename = basicService.DRIVERS_PATH.toString();

@@ -28,21 +28,19 @@ public class Main {
         //dezavantaje: instante multiple de CsvWriter
         //avantaje: toata logica scrierii e tinuta intr-o singura clasa
 
-        CsvReader<User> userCsvReader = new CsvReader<>();
-        CsvReader<Driver> driverCsvReader = new CsvReader<>();
-        CsvReader<Local> localCsvReader = new CsvReader<>();
-        CsvReader<Admin> adminCsvReader = new CsvReader<>();
-
+        UserService userService = new UserService();
+        DriverService driverService = new DriverService();
+        LocalService localService = new LocalService();
+        AdminService adminService = new AdminService();
         BasicService basicService = new BasicService();
 
         //singleton
         Company company = Company.getInstance();
 
-
-        List<User> users = userCsvReader.read(basicService.USERS_PATH);
-        List<Driver> drivers = driverCsvReader.read(basicService.DRIVERS_PATH);
-        List<Admin> admins = adminCsvReader.read(basicService.ADMIN_PATH);
-        Set<Local> locals = Set.copyOf(localCsvReader.read(basicService.LOCALS_PATH));
+        List<User> users = userService.readUsers();
+        List<Driver> drivers = driverService.read();
+        List<Admin> admins = adminService.read();
+        Set<Local> locals = Set.copyOf(localService.read());
 
         List<Account> costumers = new ArrayList<>();
         costumers.addAll(users);

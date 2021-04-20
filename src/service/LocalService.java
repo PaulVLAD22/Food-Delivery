@@ -1,18 +1,26 @@
 package service;
 
 import model.local.Local;
-import model.local.Menu;
-import model.local.Product;
-import model.location.Address;
-import model.location.Coordinate;
-import model.location.Location;
 
-import java.util.HashSet;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Set;
 
 public class LocalService {
     private BasicService basicService = new BasicService();
+
+    public final Path LOCALS_DIRECTORY = Path.of("resources/locals");
+    public final Path LOCALS_PATH = Path.of(LOCALS_DIRECTORY + "/locals.csv");
+
+    public CsvReader<Local> localCsvReader = new CsvReader<>();
+    public CsvWriter<Local> localCsvWriter = new CsvWriter<>(LOCALS_DIRECTORY, LOCALS_PATH);
+
+    public List<Local> read() {
+        return localCsvReader.read(LOCALS_PATH);
+    }
+
+    public void write(Local local) {
+        localCsvWriter.write(local);
+    }
 
 //    public Set<Local> readLocals(){
 //        Set<Local> locals = new HashSet<>();
@@ -42,4 +50,5 @@ public class LocalService {
 //        }
 //        return locals;
 //    }
+
 }

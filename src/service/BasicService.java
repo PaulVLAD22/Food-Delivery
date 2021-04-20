@@ -3,24 +3,13 @@ package service;
 import exception.UsernameOrEmailAlreadyTaken;
 import model.Company;
 import model.audit.Action;
-import model.local.Local;
-import model.local.Menu;
-import model.local.Product;
-import model.location.Address;
 import model.location.Coordinate;
 import model.account.Account;
 import model.account.Admin;
 import model.account.Driver;
 import model.account.User;
-import model.location.Location;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class BasicService {
@@ -28,29 +17,14 @@ public class BasicService {
     private int choice;
 
     private final Path AUDIT_DIRECTORY = Path.of("resources/audit");
-    private final Path AUDIT_PATH = Path.of (AUDIT_DIRECTORY + "/audit.csv");
-
-    public final Path ADMIN_DIRECTORY = Path.of("resources/admins");
-    public final Path ADMIN_PATH = Path.of (ADMIN_DIRECTORY + "/admins.csv");
-
-    public final Path DRIVERS_DIRECTORY = Path.of("resources/drivers");
-    public final Path DRIVERS_PATH = Path.of (DRIVERS_DIRECTORY+"/drivers.csv");
-
-    public final Path USERS_DIRECTORY = Path.of("resources/users");
-    public final Path USERS_PATH = Path.of(USERS_DIRECTORY + "/users.csv");
-
-    public final Path LOCALS_DIRECTORY = Path.of("resources/locals");
-    public final Path LOCALS_PATH = Path.of(LOCALS_DIRECTORY + "/locals.csv");
+    private final Path AUDIT_PATH = Path.of(AUDIT_DIRECTORY + "/audit.csv");
 
     //public final WriteService writeService = WriteService.getInstance();
     //public final ReadService readService = ReadService.getInstance();
 
-    public CsvWriter<User> userCsvWriter = new CsvWriter<>(USERS_DIRECTORY,USERS_PATH);
-    public CsvWriter<Driver> driverCsvWriter = new CsvWriter<>(DRIVERS_DIRECTORY,DRIVERS_PATH);
-    public CsvWriter<Local> localCsvWriter = new CsvWriter<>(LOCALS_DIRECTORY,LOCALS_PATH);
-    public CsvWriter<Action> actionCsvWriter = new CsvWriter<>(AUDIT_DIRECTORY,AUDIT_PATH);
+    public CsvWriter<Action> actionCsvWriter = new CsvWriter<>(AUDIT_DIRECTORY, AUDIT_PATH);
 
-    public void displayMainMenu(Company company){
+    public void displayMainMenu(Company company) {
         while (true) {
             System.out.println("1. Login as User");
             System.out.println("2. Login as Driver");
@@ -66,13 +40,12 @@ public class BasicService {
                     String username = scanner.next();
                     System.out.println("Password:");
                     String password = scanner.next();
-                    Account account = this.login(username,password,company.getCostumers());
+                    Account account = this.login(username, password, company.getCostumers());
 
                     if (account instanceof User) {
                         UserService userService = new UserService();
                         userService.displayMenu((User) account, company);
-                    }
-                    else {
+                    } else {
                         System.out.println("Invalid Login");
                     }
                     break;
@@ -81,8 +54,8 @@ public class BasicService {
                     String adminUsername = scanner.next();
                     System.out.println("Admin Password:");
                     String adminPassword = scanner.next();
-                    Admin admin = this.loginAdmin(adminUsername,adminPassword,company.getAdmins());
-                    if (admin!=null){
+                    Admin admin = this.loginAdmin(adminUsername, adminPassword, company.getAdmins());
+                    if (admin != null) {
                         AdminService adminService = new AdminService();
                         adminService.displayMenu(admin, company);
                     }
@@ -90,14 +63,14 @@ public class BasicService {
                 case 4:
                     try {
                         signUpUser(company);
-                    }catch (UsernameOrEmailAlreadyTaken e){
+                    } catch (UsernameOrEmailAlreadyTaken e) {
                         e.printStackTrace();
                     }
                     break;
                 case 5:
                     try {
                         signUpDriver(company);
-                    }catch (UsernameOrEmailAlreadyTaken e) {
+                    } catch (UsernameOrEmailAlreadyTaken e) {
                         e.printStackTrace();
                     }
                     break;
@@ -106,13 +79,12 @@ public class BasicService {
                     String usernameDriver = scanner.next();
                     System.out.println("Password:");
                     String passwordDriver = scanner.next();
-                    Account accountDriver = this.login(usernameDriver,passwordDriver,company.getCostumers());
+                    Account accountDriver = this.login(usernameDriver, passwordDriver, company.getCostumers());
 
-                    if (accountDriver instanceof Driver){
-                    DriverService driverService = new DriverService();
-                    driverService.displayMenu((Driver) accountDriver,company);
-                    }
-                    else {
+                    if (accountDriver instanceof Driver) {
+                        DriverService driverService = new DriverService();
+                        driverService.displayMenu((Driver) accountDriver, company);
+                    } else {
                         System.out.println("Invalid Login");
                     }
                     break;
@@ -132,9 +104,9 @@ public class BasicService {
         System.out.println("Email:");
         String email = scanner.next();
 
-        for (User user : company.getUsers()){
+        for (User user : company.getUsers()) {
 
-            if (user.getEmail().equals(email) || user.getUsername().equals(username)){
+            if (user.getEmail().equals(email) || user.getUsername().equals(username)) {
                 throw new UsernameOrEmailAlreadyTaken();
             }
         }
@@ -145,24 +117,25 @@ public class BasicService {
         int coordinateX = readIntChoice();
         System.out.println("Coordinate Y:");
         int coordinateY = readIntChoice();
-        User user = new User(username,email,new Coordinate(coordinateX,coordinateY),password);
+        User user = new User(username, email, new Coordinate(coordinateX, coordinateY), password);
         company.getCostumers().add(user);
         company.getUsers().add(user);
 
 
         actionCsvWriter.write(new Action("User Sign up"));
-        userCsvWriter.write(user);
+        UserService userService = new UserService();
+        userService.write(user);
     }
 
-    private void signUpDriver(Company company ) throws UsernameOrEmailAlreadyTaken {
+    private void signUpDriver(Company company) throws UsernameOrEmailAlreadyTaken {
 
         System.out.println("Username:");
         String username = scanner.next();
         System.out.println("Email:");
         String email = scanner.next();
 
-        for (Driver driver : company.getDrivers()){
-            if (driver.getEmail().equals(email) || driver.getUsername().equals(username)){
+        for (Driver driver : company.getDrivers()) {
+            if (driver.getEmail().equals(email) || driver.getUsername().equals(username)) {
                 throw new UsernameOrEmailAlreadyTaken();
             }
         }
@@ -173,34 +146,37 @@ public class BasicService {
         int coordinateX = readIntChoice();
         System.out.println("Coordinate Y:");
         int coordinateY = readIntChoice();
-        Driver driver = new Driver(username,email,new Coordinate(coordinateX,coordinateY),password);
+        Driver driver = new Driver(username, email, new Coordinate(coordinateX, coordinateY), password);
         company.getCostumers().add(driver);
         company.getDrivers().add(driver);
 
         actionCsvWriter.write(new Action("Driver Sign up"));
-        driverCsvWriter.write(driver);
+        DriverService driverService = new DriverService();
+        driverService.write(driver);
     }
 
-    private Account login(String username,String password, List<Account> accounts){
+    private Account login(String username, String password, List<Account> accounts) {
         actionCsvWriter.write(new Action("Log in attempt"));
-        for (Account account : accounts){
-            if (account.getUsername().equals(username) && account.getPassword().equals(password)){
+        for (Account account : accounts) {
+            if (account.getUsername().equals(username) && account.getPassword().equals(password)) {
                 return account;
             }
         }
         return null;
     }
-    private Admin loginAdmin(String username,String password, List<Admin> admins){
+
+    private Admin loginAdmin(String username, String password, List<Admin> admins) {
         actionCsvWriter.write(new Action("Admin log in attempt"));
-        for (Admin admin : admins){
-            if (admin.getUsername().equals(username) && admin.getPassword().equals(password)){
+        for (Admin admin : admins) {
+            if (admin.getUsername().equals(username) && admin.getPassword().equals(password)) {
                 return admin;
             }
         }
         return null;
 
     }
-    int readIntChoice(){
+
+    int readIntChoice() {
         int choice;
         while (true) {
             try {
@@ -210,8 +186,7 @@ public class BasicService {
                 System.out.println("Wrong input. Try again");
                 scanner.next();
 
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Unexpected error");
                 scanner.next();
                 break;

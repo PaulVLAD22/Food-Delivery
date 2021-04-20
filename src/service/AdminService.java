@@ -12,19 +12,18 @@ import model.local.Product;
 import model.location.Location;
 import model.order.Order;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminService {
     private BasicService basicService = new BasicService();
     private int choice;
     private Scanner scanner = new Scanner(System.in);
+    private CsvReader<Admin> adminCsvReader = new CsvReader<>();
+
+    public final Path ADMIN_DIRECTORY = Path.of("resources/admins");
+    public final Path ADMIN_PATH = Path.of (ADMIN_DIRECTORY + "/admins.csv");
 
     private void changeLocalName(Local local) {
         local.setName(scanner.next());
@@ -147,7 +146,8 @@ public class AdminService {
                     int coordinateY = scanner.nextInt();
                     Local local = new Local(localName,new Menu(),new Location(new Address(country,city,street),new Coordinate(coordinateX,coordinateY)));
                     company.getLocals().add(local);
-                    basicService.localCsvWriter.write(local);
+                    LocalService localService = new LocalService();
+                    localService.write(local);
                     //String output=localName+","+"null"+","+country+":"+city+":"+street+","+coordinateX+":"+coordinateY;
                     //basicService.writeService.writeToFile(basicService.LOCALS_DIRECTORY,basicService.LOCALS_PATH, output);
                     break;
@@ -158,6 +158,9 @@ public class AdminService {
                     System.out.println("Choose a valid option");
             }
         }
+    }
+    public List<Admin> read(){
+        return adminCsvReader.read(ADMIN_PATH);
     }
 //    public ArrayList<Admin> readAdmins(){
 //        ArrayList<Admin> admins = new ArrayList<>();
