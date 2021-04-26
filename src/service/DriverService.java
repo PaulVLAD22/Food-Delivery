@@ -10,16 +10,18 @@ import java.util.Scanner;
 public class DriverService {
     private static DriverService INSTANCE;
 
-    private DriverService(){
+    private DriverService() {
 
     }
-    public static DriverService getInstance(){
-        if (INSTANCE==null){
-            INSTANCE= new DriverService();
+
+    public static DriverService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new DriverService();
         }
         return INSTANCE;
     }
-    private OrderService orderService = new OrderService();
+
+    private OrderService orderService = OrderService.getInstance();
     private BasicService basicService = BasicService.getInstance();
     private int choice;
 
@@ -42,6 +44,7 @@ public class DriverService {
                 case 1:
                     driver.setSalary(driver.getSalary() + orderService.calculateOrder(driver.getCurrentOrder()) / 10);
                     driver.setCurrentOrder(null);
+                    // stergem order-ul
                     break;
                 case 2:
                     System.out.println("Your Expected salary is " + driver.getSalary());
@@ -64,8 +67,8 @@ public class DriverService {
 
     }
 
-    public List<Driver> read() {
-        return driverCsvReader.read(DRIVERS_PATH);
+    public List<Driver> read(Company company) {
+        return driverCsvReader.read(DRIVERS_PATH, company);
     }
 
     public void write(Driver driver) {

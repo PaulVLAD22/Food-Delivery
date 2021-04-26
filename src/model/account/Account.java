@@ -1,34 +1,24 @@
 package model.account;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import model.location.Coordinate;
 
 import java.util.Objects;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
 public abstract class Account {
-    protected static int accountID =0;
     protected int id;
     protected String username;
     protected String email;
-    protected String password;
     protected Coordinate coordinate;
-
-    public Account(){
-
-    }
-
-    public Account(String username, String email,Coordinate coordinate, String password) {
-        accountID+=1;
-        this.id=accountID;
-        this.username = username;
-        this.email=email;
-        this.password = password;
-        this.coordinate=coordinate;
-    }
+    protected String password;
 
     @Override
     public boolean equals(Object o) {
@@ -45,8 +35,8 @@ public abstract class Account {
     }
 
     @Override
-    public String toString(){
-        return "Username: "+username+" Email:"+email+" Coordinate : "+coordinate;
+    public String toString() {
+        return "Username: " + username + " Email:" + email + " Coordinate : " + coordinate;
     }
 
 }

@@ -38,7 +38,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\src\model\Company.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\src\model\account\Account.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\model\account\Driver.java">
           <value>
             <Attribute>
               <option name="separator" value=";" />
@@ -67,6 +81,13 @@
           </value>
         </entry>
         <entry key="\src\service\CsvReader.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\src\service\CsvWriter.java">
           <value>
             <Attribute>
               <option name="separator" value=";" />

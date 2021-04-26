@@ -13,24 +13,28 @@ import model.location.Location;
 import model.order.Order;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class AdminService {
-    private static final AdminService INSTANCE = new AdminService();
+    private static AdminService INSTANCE;
 
     private AdminService() {
 
     }
 
     public static AdminService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new AdminService();
+        }
         return INSTANCE;
     }
 
     private BasicService basicService = BasicService.getInstance();
     private int choice;
-    private Scanner scanner = new Scanner(System.in);
-    private CsvReader<Admin> adminCsvReader = new CsvReader<>();
+    private final Scanner scanner = new Scanner(System.in);
+    private final CsvReader<Admin> adminCsvReader = new CsvReader<>();
 
     private final Path ADMIN_DIRECTORY = Path.of("resources/admins");
     private final Path ADMIN_PATH = Path.of(ADMIN_DIRECTORY + "/admins.csv");
@@ -63,36 +67,25 @@ public class AdminService {
                 choice = basicService.readIntChoice();
                 String productName;
                 switch (choice) {
-                    case 1:
-                        changeLocalName(chosenLocal);
-                        break;
-                    case 2:
+                    case 1 -> changeLocalName(chosenLocal);
+                    case 2 -> {
                         System.out.println("Product Name:");
                         productName = scanner.next();
                         System.out.println("Product Price:");
                         double productPrice = scanner.nextDouble();
                         chosenLocal.getMenu().getProducts().add(new Product(productName, productPrice));
-                        break;
-                    case 3:
+                    }
+                    case 3 -> {
                         System.out.println("Enter product name:");
                         productName = scanner.next();
-
-                        Product productToDelete =chosenLocal.getMenu().getProducts().stream().
-                                filter(product ->product.getName().equals(productName)).findFirst().orElse(null);
-
+                        Product productToDelete = chosenLocal.getMenu().getProducts().stream().
+                                filter(product -> product.getName().equals(productName)).findFirst().orElse(null);
                         chosenLocal.getMenu().getProducts().remove(productToDelete);
-                        break;
-                    case 4:
-                        company.getLocals().remove(chosenLocal);
-                        break;
-                    case 5:
-                        System.out.println(chosenLocal);
-                        break;
-                    case 10:
-                        displayMenu(admin, company);
-                        break;
-                    default:
-                        System.out.println("Choose a valid option");
+                    }
+                    case 4 -> company.getLocals().remove(chosenLocal);
+                    case 5 -> System.out.println(chosenLocal);
+                    case 10 -> displayMenu(admin, company);
+                    default -> System.out.println("Choose a valid option");
                 }
             }
         } else {
@@ -152,7 +145,8 @@ public class AdminService {
                     int coordinateX = scanner.nextInt();
                     System.out.println("Enter Y coordinate:");
                     int coordinateY = scanner.nextInt();
-                    Local local = new Local(localName, new Menu(), new Location(new Address(country, city, street), new Coordinate(coordinateX, coordinateY)));
+                    int newID = (company.getLocals().stream().max(Comparator.comparingInt(Local::getId)).get().getId() + 1);
+                    Local local = new Local(newID, localName, new Menu(), new Location(new Address(country, city, street), new Coordinate(coordinateX, coordinateY)));
                     company.getLocals().add(local);
 
                     LocalService localService = LocalService.getInstance();
@@ -167,7 +161,7 @@ public class AdminService {
         }
     }
 
-    public List<Admin> read() {
-        return adminCsvReader.read(ADMIN_PATH);
+    public List<Admin> read(Company company) {
+        return adminCsvReader.read(ADMIN_PATH, company);
     }
 }

@@ -6,9 +6,11 @@ import model.account.Admin;
 import model.account.Driver;
 import model.account.User;
 import model.local.Local;
+import model.order.Order;
 import service.*;
 
 import java.util.*;
+import java.util.List;
 
 
 public class Main {
@@ -33,21 +35,24 @@ public class Main {
         LocalService localService = LocalService.getInstance();
         AdminService adminService = AdminService.getInstance();
         BasicService basicService = BasicService.getInstance();
+        OrderService orderService = OrderService.getInstance();
 
         Company company = Company.getInstance();
 
-        List<User> users = userService.readUsers();
-        List<Driver> drivers = driverService.read();
-        List<Admin> admins = adminService.read();
-        Set<Local> locals = Set.copyOf(localService.read());
+        List<User> users = userService.readUsers(company);
+        List<Driver> drivers = driverService.read(company);
 
         List<Account> costumers = new ArrayList<>();
         costumers.addAll(users);
         costumers.addAll(drivers);
-
-        company.setAdmins(admins);
-        company.setLocals(locals);
         company.setCostumers(costumers);
+
+        List<Admin> admins = adminService.read(company);
+        company.setAdmins(admins);
+        Set<Local> locals = Set.copyOf(localService.read(company));
+        company.setLocals(locals);
+        List <Order> orders = orderService.read(company);
+        company.setOrders(orders);
 
         basicService.displayMainMenu(company);
 

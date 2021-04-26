@@ -9,14 +9,14 @@ import java.util.Objects;
 
 @Data
 public class Menu {
-    private static int menuID =0;
+    private static int menuID = 0;
     private int id;
     private List<Product> products;
 
-    public Menu(){
+    public Menu() {
         menuID += 1;
         this.id = menuID;
-        products=new ArrayList<>();
+        products = new ArrayList<>();
     }
 
     public Menu(List<Product> products) {

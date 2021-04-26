@@ -47,4 +47,10 @@ public class Company {
             }
         }
     }
+    // set orders seteaza la useri comenzile
+    public void setOrders(List<Order> orders){
+        orders.stream().forEach(order -> {
+            order.getDriver().setCurrentOrder(order);
+        });
+    }
 }

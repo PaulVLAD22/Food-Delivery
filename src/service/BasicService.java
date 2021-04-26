@@ -15,17 +15,18 @@ import java.util.*;
 public class BasicService {
     private static BasicService INSTANCE;
 
-    private BasicService(){
+    private BasicService() {
 
     }
-    public static BasicService getInstance(){
-        if (INSTANCE == null){
-            INSTANCE =  new BasicService();
+
+    public static BasicService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new BasicService();
         }
         return INSTANCE;
     }
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private int choice;
 
     private final Path AUDIT_DIRECTORY = Path.of("resources/audit");
@@ -115,7 +116,7 @@ public class BasicService {
 
         User newUser = User.builder().username(username).email(email).build();
 
-        if(company.getUsers().stream().anyMatch(driver -> driver.equals(newUser)))
+        if (company.getUsers().stream().anyMatch(driver -> driver.equals(newUser)))
             throw new UsernameOrEmailAlreadyTaken();
 
         System.out.println("Password");
@@ -124,7 +125,8 @@ public class BasicService {
         int coordinateX = readIntChoice();
         System.out.println("Coordinate Y:");
         int coordinateY = readIntChoice();
-        User user = new User(username, email, new Coordinate(coordinateX, coordinateY), password);
+        int newID = company.getUsers().stream().max(Comparator.comparingInt(Account::getId)).get().getId() + 1;
+        User user = new User(newID, username, email, new Coordinate(coordinateX, coordinateY), password);
         company.getCostumers().add(user);
         company.getUsers().add(user);
 
@@ -145,7 +147,7 @@ public class BasicService {
                 username(username).
                 email(email).build();
 
-        if(company.getDrivers().stream().anyMatch(driver -> driver.equals(newDriver)))
+        if (company.getDrivers().stream().anyMatch(driver -> driver.equals(newDriver)))
             throw new UsernameOrEmailAlreadyTaken();
 
 
@@ -156,7 +158,7 @@ public class BasicService {
         System.out.println("Coordinate Y:");
         int coordinateY = readIntChoice();
 
-        Driver driver = new Driver(username, email, new Coordinate(coordinateX, coordinateY), password);
+        Driver driver = new Driver((company.getDrivers().stream().max(Comparator.comparingInt(Account::getId)).get().getId() + 1), username, email, new Coordinate(coordinateX, coordinateY), password);
         company.getCostumers().add(driver);
         company.getDrivers().add(driver);
 

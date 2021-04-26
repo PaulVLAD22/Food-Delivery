@@ -55,22 +55,24 @@ public class UserService {
             switch (choice) {
                 case 1:
                     basicService.actionCsvWriter.write(new Action("Menu Viewed set"));
-                    locals.stream().forEach(local -> System.out.println(local));
+                    locals.forEach(System.out::println);
                     break;
                 case 2:
                     ArrayList<Local> locals_arr = new ArrayList<>(locals);
                     System.out.println("Choose the local:");
                     for (Local local : locals_arr) {
-                        System.out.println(locals_arr.indexOf(local) + 1);
-                        System.out.println(local);
+                        if (local.getMenu().getProducts().size()!=0) {
+                            System.out.println(locals_arr.indexOf(local) + 1);
+                            System.out.println(local);
+                        }
                     }
                     choice = basicService.readIntChoice();
                     choice -= 1;
 
                     Local chosenLocal = locals_arr.get(choice);
                     List<Product> localProducts = chosenLocal.getMenu().getProducts();
-                    localProducts.stream().forEach(product ->{
-                        System.out.println(localProducts.indexOf(product)+1);
+                    localProducts.stream().forEach(product -> {
+                        System.out.println(localProducts.indexOf(product) + 1);
                         System.out.println(product);
                     });
 
@@ -80,13 +82,15 @@ public class UserService {
                     String[] entry = input.split(",");
                     for (String s : entry) {
                         String[] info = s.split(":");
-                        int productNumber = parseInt(info[0]);
+                        int productNumber = parseInt(info[0])-1;
                         int productQuantity = parseInt(info[1]);
                         order_products.put(localProducts.get(productNumber), productQuantity);
                     }
                     try {
                         Driver closestDriver = closestDriver(chosenLocal, company);
+                        int newID = (company.getOrders().stream().max(Comparator.comparingInt(Order::getId)).get().getId() + 1);
                         Order order = Order.builder().
+                                id(newID).
                                 user(user).
                                 driver(closestDriver).
                                 local(chosenLocal).
@@ -100,6 +104,7 @@ public class UserService {
                         System.out.println("The order will arrive in :" + totalDistance / 10);
                         System.out.println("The driver will travel with speed of a 10 units per minute");
 
+                        OrderService.getInstance().write(order);
                         basicService.actionCsvWriter.write(new Action("Order set"));
                     } catch (NoDriverInRangeException e) {
                         e.printStackTrace();
@@ -134,24 +139,24 @@ public class UserService {
 
     private Driver closestDriver(Local chosenLocal, Company company) throws NoDriverInRangeException {
         List<Driver> drivers = company.getDrivers();
-        double minimum_distance = Double.POSITIVE_INFINITY;
-        int driver_index = -1;
+        double minimumDistance = Double.POSITIVE_INFINITY;
+        int driverIndex = -1;
 
         for (Driver driver : drivers) {
             double currentDistance = calculateDistance(driver.getCoordinate(), chosenLocal.getLocation().getCoordinate());
-            if (currentDistance < 1000 && currentDistance < minimum_distance) {
-                minimum_distance = currentDistance;
-                driver_index = drivers.indexOf(driver);
+            if (currentDistance < 1000 && currentDistance < minimumDistance) {
+                minimumDistance = currentDistance;
+                driverIndex = drivers.indexOf(driver);
             }
         }
-        if (driver_index == -1) {
+        if (driverIndex == -1) {
             throw new NoDriverInRangeException();
         }
-        return drivers.get(driver_index);
+        return drivers.get(driverIndex);
     }
 
-    public List<User> readUsers() {
-        return userCsvReader.read(USERS_PATH);
+    public List<User> readUsers(Company company) {
+        return userCsvReader.read(USERS_PATH, company);
     }
 
     public void write(User user) {
